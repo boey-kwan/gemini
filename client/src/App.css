@@ -1,8 +1,18 @@
-#root {
+:root {
+  --navbar-height: 2em;
+  --body-margin-side: 10%;
+}
+
+/* #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+} */
+
+* {
+  margin: 0;
+  padding: 0;
 }
 
 .logo {
@@ -40,3 +50,47 @@
 .read-the-docs {
   color: #888;
 }
+
+.navbar {
+  height: var(--navbar-height);
+  font-size: 1em;
+  background-color: #4b8bca;
+  width: 100%;
+  /* display: flex; */
+  /* flex-wrap: wrap; */
+  /* flex justify-between items-center mb-6 */
+}
+
+.row-item {
+  display: inline;
+  margin: 0 1em;
+}
+
+
+.body {
+  margin-top: var(--navbar-height);
+  margin-left: var(--body-margin-side);
+  margin-right: var(--body-margin-side);
+}
+
+.task {
+  box-shadow: 0px 0px 10px 0px #00000033;
+  border-radius: 10px;
+  padding: 1em;
+}
+
+.task-details {
+  margin-left: 2%;
+}
+
+.checkbox {
+  height: 1em;
+  width: 1em;
+  position: absolute;
+  left: 8%;
+}
+
+input {
+    vertical-align: top;
+}
+
