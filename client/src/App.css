@@ -1,6 +1,13 @@
 :root {
-  --navbar-height: 2em;
+  --navbar-height: 3em;
   --body-margin-side: 10%;
+}
+
+:root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  min-height: 100%;
 }
 
 /* #root {
@@ -9,6 +16,21 @@
   padding: 2rem;
   text-align: center;
 } */
+
+body, html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+}
+
+html {
+  background-color: rgb(142, 216, 246);
+}
+
+#container {
+  min-height: 100%;
+}
 
 * {
   margin: 0;
@@ -43,6 +65,20 @@
   }
 }
 
+h1, h2, .h1, .h2 {
+  font-style: bold;
+  white-space: nowrap;
+  height: fit-content;
+}
+
+h1, .h1 {
+  font-size: 30px;
+}
+
+h2, .h2 {
+  font-size: 24px;
+}
+
 .card {
   padding: 2em;
 }
@@ -52,13 +88,25 @@
 }
 
 .navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
   height: var(--navbar-height);
   font-size: 1em;
   background-color: #4b8bca;
   width: 100%;
-  /* display: flex; */
-  /* flex-wrap: wrap; */
-  /* flex justify-between items-center mb-6 */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  /* align-items: center; */
+  align-content: center;
 }
 
 .row-item {
@@ -66,11 +114,36 @@
   margin: 0 1em;
 }
 
-
 .body {
-  margin-top: var(--navbar-height);
+  height: 100%;
+}
+
+.body-center {
+  padding-top: var(--navbar-height);
+  height: 100%;
   margin-left: var(--body-margin-side);
   margin-right: var(--body-margin-side);
+  background-color: aliceblue;
+  padding-left: 2em;
+  padding-right: 2em;
+}
+
+.body-left, .body-right {
+  height: 100%;
+  width: var(--body-margin-side);
+}
+
+.scroll {
+  overflow-x: scroll;
+  align-self: center;
+}
+
+.task-list {
+  padding-top: 2em;
+  padding-bottom: 2em;
+  display: flex;
+  flex-direction: column;
+  row-gap: 2em;
 }
 
 .task {
@@ -84,13 +157,11 @@
 }
 
 .checkbox {
-  height: 1em;
+  height: 100%;
   width: 1em;
-  position: absolute;
-  left: 8%;
 }
 
 input {
-    vertical-align: top;
+  vertical-align: top;
 }
 

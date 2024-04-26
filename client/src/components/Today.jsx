@@ -1,11 +1,26 @@
+import '../App.css';
 import Task from "./Task";
 
 export default function Today() {
+ 
     return (
-      <div>
-        <h1>Today's To-Do List</h1>
-        <Task />
-        <Task />
-      </div>
+      <>
+        <div className="body-left">
+         {"< Yesterday"}
+        </div>
+        <div className="body-center scroll">
+          <h1 className='h1'>Today's To-Do List</h1>
+          <div className='task-list'>
+            <Task />
+            <Task />
+            <Task />
+            <Task />
+            <Task />
+          </div>
+        </div>
+        <div className="body-right">
+
+        </div>
+      </>
     );
   }
