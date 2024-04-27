@@ -1,12 +1,16 @@
 import express from "express";
 import cors from "cors";
 
+import usersRouter from "./routes/users.js";
+
 const PORT = process.env.PORT || 5050;
 const app = express();
 
 app.use(cors());
 app.use(express.json());
-// app.use(path, handler); // TODO: mount handler as middleware at path
+
+app.use("/users", usersRouter);
+
 
 // start the Express server
 app.listen(PORT, () => {
