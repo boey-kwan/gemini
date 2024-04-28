@@ -3,12 +3,14 @@ import { prisma } from '../db/prismaClient';
 
 import daysRouter from './days/days.js';
 import tasksRouter from './tasks/tasks.js';
+import memoriesRouter from './memories/memories.js';
 
 const router = express.Router();
 
 
 router.use('/days', daysRouter);
 router.use('/tasks', tasksRouter);
+router.use('/memories', memoriesRouter);
 
 // Get all Tasks in day
 router.get('/', isAuthenticated, async (req, res) => {
