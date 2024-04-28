@@ -8,7 +8,7 @@ const router = express.Router();
 
 
 router.use('/days', daysRouter);
-// router.use('/tasks', tasksRouter);
+router.use('/tasks', tasksRouter);
 
 // Get all Tasks in day
 // code here ...
