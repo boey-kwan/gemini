@@ -39,7 +39,7 @@ router.post('/tasks', isAuthenticated, async (req, res) => {
 
 // get one task
 router.get('/tasks', isAuthenticated, async (req, res) => {
-  const { userID, taskID} = req.query;  // Using query parameters for GET request
+  const { userID, taskID} = req.query;
 
   try {
     const task = await prisma.task.findFirst({
@@ -83,7 +83,7 @@ router.get('/tasks', isAuthenticated, async (req, res) => {
 
 // edit
 router.patch('/tasks', isAuthenticated, async (req, res) => {
-  const { userId, taskId, updates } = req.body; // expecting task ID and updates in the body
+  const { userId, taskId, updates } = req.body;
 
   try {
       // allow only the task owner to update the task
@@ -118,55 +118,6 @@ router.patch('/tasks', isAuthenticated, async (req, res) => {
           status: false,
           message: error.message
       });
-  }
-});
-
-// get many tasks
-router.get('/users/:userId/days/:date/tasks', isAuthenticated, async (req, res) => {
-  const { userId, date } = req.params;
-
-  try {
-    const targetDate = new Date(date);
-    targetDate.setHours(0, 0, 0, 0);
-
-    const tasks = await prisma.task.findMany({
-      where: {
-        userId: parseInt(userId),
-        days: {
-          some: {
-            date: targetDate
-          }
-        }
-      },
-      include: {
-        photos: true // Include related photos
-      }
-    });
-
-    const data = tasks.map(task => ({
-      title: task.title,
-      description: task.description,
-      time: task.time,
-      location: task.location,
-      photoIDs: task.photos.map(photo => photo.id)
-    }));
-
-    return res.json({
-      status: true,
-      message: 'successful',
-      data: data
-    });
-  } catch (error) {
-    if (error instanceof Prisma.PrismaClientKnownRequestError) {
-      return res.status(400).json({
-        status: false,
-        message: error.message
-      });
-    }
-    return res.status(500).json({
-      status: false,
-      message: 'Internal server error'
-    });
   }
 });
 
