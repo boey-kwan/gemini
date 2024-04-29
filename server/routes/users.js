@@ -4,13 +4,15 @@ import { prisma } from '../db/prismaClient';
 import daysRouter from './days/days.js';
 import tasksRouter from './tasks/tasks.js';
 import memoriesRouter from './memories/memories.js';
+import photosRouter from './photos/photos.js';
 
 const router = express.Router();
 
 // deeper routes 
 router.use('/days', daysRouter);
 router.use('/tasks', tasksRouter);
-router.use('/memories', memoriesRouter);
+router.use('/memories', memoriesRouter); //
+router.use('/photos', photosRouter);
 
 // Create User
 router.post('/', async (req, res) => {

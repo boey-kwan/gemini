@@ -47,7 +47,8 @@ model Task {
 
 model Photo {
   id          Int      @id @default(autoincrement())
-  description String
+  description String?
+  url         String
   tasks       Task[]
   memories    Memory[]
 }
