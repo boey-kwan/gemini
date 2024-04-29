@@ -4,14 +4,13 @@ import { prisma } from '../../db/prismaClient';
 
 const router = express.Router();
 
-
-
 // create a new task
 router.post('/tasks', isAuthenticated, async (req, res) => {
   const { userId, title, description, location } = req.body;
   
   // get current time in hours and minutes
-  const time = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+  const time = new Date();
+  time.setHours(0, 0, 0, 0);
 
   try {
     const newTask = await prisma.task.create({

@@ -4,7 +4,7 @@ import { prisma } from '../../db/prismaClient';
 
 const router = express.Router();
 
-router.get('/users/days', isAuthenticated, async (req, res) => {
+router.get('/memories', isAuthenticated, async (req, res) => {
   const { userID, listOfDates } = req.query;
 
   if (!userID || !listOfDates) {
@@ -44,4 +44,4 @@ router.get('/users/days', isAuthenticated, async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;
