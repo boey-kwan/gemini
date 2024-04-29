@@ -7,58 +7,59 @@ import memoriesRouter from './memories/memories.js';
 
 const router = express.Router();
 
-
+// deeper routes 
 router.use('/days', daysRouter);
 router.use('/tasks', tasksRouter);
 router.use('/memories', memoriesRouter);
 
-// Get all Tasks in day
-router.get('/', isAuthenticated, async (req, res) => {
-    const { userId, date } = req.query;
+// Create User
+router.post('/', async (req, res) => {
+    const { email, password } = req.body;
+  
+    if (!email || !password) {
+      return res.status(400).json({
+        status: false,
+        message: "Missing required fields"
+      });
+    }
   
     try {
-      const targetDate = new Date(date);
-      targetDate.setHours(0, 0, 0, 0);
-  
-      const tasks = await prisma.task.findMany({
+      // Check for existing user
+      const existingUser = await prisma.user.findUnique({
         where: {
-          userId: parseInt(userId),
-          days: {
-            some: {
-              date: targetDate
-            }
-          }
+          email: email,
         },
-        include: {
-          photos: true // Include related photos
-        }
       });
   
-      const data = tasks.map(task => ({
-        title: task.title,
-        description: task.description,
-        time: task.time,
-        location: task.location,
-        photoIDs: task.photos.map(photo => photo.id)
-      }));
-  
-      return res.json({
-        status: true,
-        message: 'successful',
-        data: data
-      });
-    } catch (error) {
-      if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      if (existingUser) {
         return res.status(400).json({
           status: false,
-          message: error.message
+          message: "username is not unique"
         });
       }
+  
+      // Assuming all requests are authorized
+  
+      // Create new user
+      const user = await prisma.user.create({
+        data: {
+          email: email,
+          password: password,
+        },
+      });
+  
+      return res.status(201).json({
+        status: true,
+        message: "successful"
+      });
+    } catch (error) {
+      console.error('Failed to create user:', error);
       return res.status(500).json({
         status: false,
-        message: 'Internal server error'
+        message: error.message
       });
     }
   });
+  
 
 export default router;
