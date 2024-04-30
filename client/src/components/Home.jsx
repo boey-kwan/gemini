@@ -8,24 +8,12 @@ export default function Home() {
 
   return (
 
-    
-    <div className="column login centered">
+    <div className="row login centered">
 
       <h1 className='h1'>Welcome to Gemini Task Manager!</h1>
 
-      <TextField 
-        id='username-field' 
-        label="Username" 
-        variant='outlined'
-        fullWidth/>
-
-      <TextField 
-        id='password-field' 
-        label="Password" 
-        variant='outlined'
-        fullWidth/>
-
-      <button className='big-button centered' onClick={() => {navigate("/today");}}>Log in</button>
+      <button className='main-button centered' onClick={() => {navigate("/login");}}>Log in</button>
+      <button className='secondary-button centered' onClick={() => {navigate("/createUser");}}>Create user</button>
 
     </div>
   );

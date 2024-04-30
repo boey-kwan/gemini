@@ -71,7 +71,6 @@ html {
 
 h1, h2, .h1, .h2 {
   text-align: center;
-  padding-top: 1em;
   font-style: bold;
   white-space: nowrap;
   height: fit-content;
@@ -79,10 +78,13 @@ h1, h2, .h1, .h2 {
 
 h1, .h1 {
   font-size: 30px;
+  padding-top: 1em;
 }
 
 h2, .h2 {
   font-size: 24px;
+  color: darkslategray;
+  padding-top: .5em;
 }
 
 .card {
@@ -191,15 +193,9 @@ input {
   flex-direction: column;
   justify-content: space-between;
   row-gap: 0.5em;
-  /* align-items: center; */
   align-content: center;
 }
 
-.centered {
-  display: block;
-  margin-left:auto;
-  margin-right:auto;
-}
 
 .login {
   width:fit-content;
@@ -207,18 +203,39 @@ input {
   padding:2em;
 }
 
-.big-button {
+.main-button {
   width: fit-content;
-  border: 2px solid black;
+  border: 2px solid white;
   border-radius: 10%;
   background-color: aliceblue;
   padding: 14px 28px;
   cursor: pointer;
-  border-color: black;
   color: var(--dark-blue);
+  margin: 1em;
 }
 
-.big-button:hover {
+.main-button:hover {
   background: var(--dark-blue);
   color: white;
+}
+
+.secondary-button {
+  width: fit-content;
+  border: 2px solid white;
+  border-radius: 10%;
+  padding: 14px 28px;
+  cursor: pointer;
+  color: var(--dark-blue); 
+  margin: 1em;
+}
+
+.secondary-button:hover {
+  background: var(--dark-blue);
+  color: white;
+}
+
+.centered {
+  display: block;
+  margin-left:auto;
+  margin-right:auto;
 }

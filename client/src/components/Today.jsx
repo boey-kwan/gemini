@@ -9,6 +9,8 @@ export default function Today() {
   // TODO: Initialize to the first ID in the list.
   const [currentTaskId, setCurrentTaskId] = useState(1);
 
+  const date = new Date().toDateString();
+
   function updateCurrentTaskId(id) {
     setCurrentTaskId(id);
     console.log("current task: " + id)
@@ -23,6 +25,7 @@ export default function Today() {
 
           <div className="body-center scroll">
             <h1 className='h1'>Today's To-Do List</h1>
+            <h2 className='h2'>{date}</h2>
             <div className='task-list'>
               {taskList.map((value) => {
                 return <Task key={value} 
@@ -38,7 +41,7 @@ export default function Today() {
         </div>
 
         {/* Add a task button */}
-        <button className="big-button centered"
+        <button className="main-button centered"
           onClick={() => {
             setTaskList(
               [...taskList, taskList.length+1]
