@@ -33,7 +33,7 @@ export default function Task(props) {
         <div className='row' style={{width:'100%'}}>
         <div className='column sidebar' />
 
-            <div className="task" 
+            <div className="task shadowed-card" 
                 ref={taskRef}
                 onClick={()=>props.onClick(props.id)}
             >

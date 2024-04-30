@@ -151,12 +151,15 @@ h2, .h2 {
   row-gap: 2em;
 }
 
-.task {
+.shadowed-card {
   box-shadow: 0px 0px 10px 0px #00000033;
   border-radius: 10px;
   padding: 1em;
   background-color: aliceblue;
-  width: 80%;
+}
+
+.task {
+  width: 90%;
 }
 
 .task-details {
@@ -177,8 +180,8 @@ input {
 }
 
 .sidebar {
-  width: 10%;
-  height: fit-content
+  width: fit-content;
+  height: fit-content;
 }
 
 .column {
