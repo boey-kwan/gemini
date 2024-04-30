@@ -256,3 +256,21 @@ input {
   margin-left:auto;
   margin-right:auto;
 }
+
+.day-navigation {
+  position:fixed; 
+  top:50%;
+  color: darkslategray;
+  font-family: italic;
+  padding: 0.5em;
+}
+
+.day-navigation:hover {
+  position:fixed; 
+  top:50%;
+  color: white;
+  background-color: var(--dark-blue);
+  border-radius: 50%;
+  padding: 0.5em;
+  font-family: italic;
+}
