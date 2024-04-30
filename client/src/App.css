@@ -2,6 +2,9 @@
   --navbar-height: 3em;
   --body-margin-side: 10%;
   --body-padding: 2em;
+  --dark-blue: #4b8bca;
+  --medium-blue: rgb(142, 216, 246);
+  --light-blue: alice-blue;
 }
 
 :root {
@@ -26,7 +29,7 @@ body, html {
 }
 
 html {
-  background-color: rgb(142, 216, 246);
+  background-color: var(--medium-blue);
 }
 
 #container {
@@ -67,6 +70,8 @@ html {
 }
 
 h1, h2, .h1, .h2 {
+  text-align: center;
+  padding-top: 1em;
   font-style: bold;
   white-space: nowrap;
   height: fit-content;
@@ -94,7 +99,7 @@ h2, .h2 {
   left: 0;
   height: var(--navbar-height);
   font-size: 1em;
-  background-color: #4b8bca;
+  background-color: var(--dark-blue);
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -123,10 +128,7 @@ h2, .h2 {
 
 .body-center {
   height: 100%;
-  /* margin-left: var(--body-margin-side);
-  margin-right: var(--body-margin-side); */
   width: calc(100% - 2*var(--body-margin-side));
-  /* background-color: aliceblue; */
   padding-left: var(--body-padding);
   padding-right: var(--body-padding);
 }
@@ -191,4 +193,32 @@ input {
   row-gap: 0.5em;
   /* align-items: center; */
   align-content: center;
+}
+
+.centered {
+  display: block;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.login {
+  width:fit-content;
+  text-align:center;
+  padding:2em;
+}
+
+.big-button {
+  width: fit-content;
+  border: 2px solid black;
+  border-radius: 10%;
+  background-color: aliceblue;
+  padding: 14px 28px;
+  cursor: pointer;
+  border-color: black;
+  color: var(--dark-blue);
+}
+
+.big-button:hover {
+  background: var(--dark-blue);
+  color: white;
 }

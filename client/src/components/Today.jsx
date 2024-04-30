@@ -22,7 +22,7 @@ export default function Today() {
           </div>
 
           <div className="body-center scroll">
-            <h1 className='h1' style={{textAlign: 'center'}}>Today's To-Do List</h1>
+            <h1 className='h1'>Today's To-Do List</h1>
             <div className='task-list'>
               {taskList.map((value) => {
                 return <Task key={value} 
@@ -38,10 +38,7 @@ export default function Today() {
         </div>
 
         {/* Add a task button */}
-        <button style={{
-          display: 'block',
-          margin: 'auto',
-          alignText: 'center'}}
+        <button className="big-button centered"
           onClick={() => {
             setTaskList(
               [...taskList, taskList.length+1]
