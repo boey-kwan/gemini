@@ -2,13 +2,9 @@
   --navbar-height: 3em;
   --body-margin-side: 10%;
   --body-padding: 2em;
-<<<<<<< HEAD
   --dark-blue: #4b8bca;
   --medium-blue: rgb(142, 216, 246);
   --light-blue: alice-blue;
-=======
-  --primary-blue: rgb(106, 193, 227);
->>>>>>> d228e24d410090f5c7ba05588c02fe1a6d8cb50d
 }
 
 :root {

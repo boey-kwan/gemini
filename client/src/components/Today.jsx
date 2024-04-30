@@ -49,7 +49,7 @@ export default function Today() {
                 justifyContent: 'center',
               }}>
                 <button 
-                  className='row' 
+                  className='row main-button' 
                   style={{
                     width: 'fit-content',
                   }}
@@ -67,16 +67,6 @@ export default function Today() {
           <div className="body-right">
           </div>
         </div>
-
-        {/* Add a task button */}
-        <button className="main-button centered"
-          onClick={() => {
-            setTaskList(
-              [...taskList, taskList.length+1]
-            )
-          }}>
-          Add a task.
-        </button>
       </div>
     );
   }
