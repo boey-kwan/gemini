@@ -110,7 +110,7 @@ export default function Task(props) {
 
             </div>
 
-            <Sidebar onClickSidebarIcon={onClickSidebarIcon} showSidebar={props.showSidebar} />
+            <Sidebar onClickSidebarIcon={onClickSidebarIcon} showSidebar={props.showSidebar} showFields={showFields}/>
             </div>
             
         </>
