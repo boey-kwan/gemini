@@ -11,7 +11,10 @@ export default function Today() {
         <div className="body-center scroll">
           <h1 className='h1'>Today's To-Do List</h1>
           <div className='task-list'>
-            <Task />
+            <div className='row'>
+              <Task />
+              <Sidebar />
+            </div>
             <Task />
             <Task />
             <Task />
