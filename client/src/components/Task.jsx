@@ -4,6 +4,7 @@ import { Checkbox, TextField } from '@mui/material'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import Sidebar from './Sidebar';
 
 export default function Task(props) {
@@ -102,10 +103,14 @@ export default function Task(props) {
                         : null
                     }
                 </form>
+                
+                <button onClick={() => props.deleteTask(props.id)} style={{position: 'relative', float: 'right'}}>
+                    <DeleteOutlinedIcon/>
+                </button>
+
             </div>
 
-            <Sidebar onClickSidebarIcon={onClickSidebarIcon} showSidebar={props.showSidebar} />
-
+            <Sidebar onClickSidebarIcon={onClickSidebarIcon} showSidebar={props.showSidebar} showFields={showFields}/>
             </div>
             
         </>
