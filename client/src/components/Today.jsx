@@ -5,6 +5,7 @@ import Task from "./Task";
 export default function Today() {
 
   // TODO: Grab all tasks in this day.
+  const [taskList, setTaskList] = useState([1, 2]);
   // TODO: Initialize to the first ID in the list.
   const [currentTaskId, setCurrentTaskId] = useState(1);
 
@@ -14,25 +15,40 @@ export default function Today() {
   }
  
     return (
-      <div className='row'>
-        <div className="body-left">
-         {"< Yesterday"}
-        </div>
+      <div>
+        <div className='row'>
+          <div className="body-left">
+          {"< Yesterday"}
+          </div>
 
-        <div className="body-center scroll">
-          <h1 className='h1' style={{textAlign: 'center'}}>Today's To-Do List</h1>
-          <div className='task-list'>
-            {[1, 2, 3, 4].map((value) => {
-              return <Task key={value} 
-              id={value} 
-              showSidebar={currentTaskId == value}
-              onClick={updateCurrentTaskId}/>
-            })}
+          <div className="body-center scroll">
+            <h1 className='h1' style={{textAlign: 'center'}}>Today's To-Do List</h1>
+            <div className='task-list'>
+              {taskList.map((value) => {
+                return <Task key={value} 
+                id={value} 
+                showSidebar={currentTaskId == value}
+                onClick={updateCurrentTaskId}/>
+              })}
+            </div>
+          </div>
+
+          <div className="body-right">
           </div>
         </div>
 
-        <div className="body-right">
-        </div>
+        {/* Add a task button */}
+        <button style={{
+          display: 'block',
+          margin: 'auto',
+          alignText: 'center'}}
+          onClick={() => {
+            setTaskList(
+              [...taskList, taskList.length+1]
+            )
+          }}>
+          Add a task.
+        </button>
       </div>
     );
   }
