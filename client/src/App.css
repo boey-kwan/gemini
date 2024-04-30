@@ -109,6 +109,7 @@ h2, .h2 {
   width: 100%;
   /* align-items: center; */
   align-content: center;
+  column-gap: 0.5em;
 }
 
 .row-item {
