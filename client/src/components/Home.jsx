@@ -6,11 +6,11 @@ export default function Home() {
 
 
   return (
-    <div>
-      <button className="row-item" onClick={() => {
+    <div className="row">
+      <button  onClick={() => {
         navigate("/today");
       }}>Today's To-Do List</button>
-      <button className="row-item" onClick={() => {
+      <button  onClick={() => {
         navigate("/memories");
       }}>Memories</button>
     </div>

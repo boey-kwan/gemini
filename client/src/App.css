@@ -1,6 +1,7 @@
 :root {
   --navbar-height: 3em;
   --body-margin-side: 10%;
+  --body-padding: 2em;
 }
 
 :root {
@@ -98,6 +99,7 @@ h2, .h2 {
   display: flex;
   flex-direction: row;
   align-items: center;
+  z-index: 10;
 }
 
 .row {
@@ -116,21 +118,24 @@ h2, .h2 {
 
 .body {
   height: 100%;
+  padding-top: var(--navbar-height);
 }
 
 .body-center {
-  padding-top: var(--navbar-height);
   height: 100%;
-  margin-left: var(--body-margin-side);
-  margin-right: var(--body-margin-side);
-  background-color: aliceblue;
-  padding-left: 2em;
-  padding-right: 2em;
+  /* margin-left: var(--body-margin-side);
+  margin-right: var(--body-margin-side); */
+  width: calc(100% - 2*var(--body-margin-side));
+  /* background-color: aliceblue; */
+  padding-left: var(--body-padding);
+  padding-right: var(--body-padding);
 }
 
 .body-left, .body-right {
   height: 100%;
   width: var(--body-margin-side);
+  padding-left: 1em;
+  padding-right: 1em;
 }
 
 .scroll {
@@ -150,6 +155,8 @@ h2, .h2 {
   box-shadow: 0px 0px 10px 0px #00000033;
   border-radius: 10px;
   padding: 1em;
+  background-color: aliceblue;
+  width: 80%;
 }
 
 .task-details {
@@ -169,3 +176,16 @@ input {
   vertical-align: top;
 }
 
+.sidebar {
+  width: 10%;
+  height: fit-content
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  row-gap: 0.5em;
+  /* align-items: center; */
+  align-content: center;
+}
