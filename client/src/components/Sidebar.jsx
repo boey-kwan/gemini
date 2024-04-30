@@ -25,10 +25,13 @@ export default function Sidebar(props) {
               <button 
                 
                 onClick={() => props.onClickSidebarIcon(icon.id)} 
+
                 style={{
                   color: props.showFields[icon.id] ? 'var(--primary-blue)' : 'black',
                 }}>
+
                 {icon.icon}
+                
               </button>
             )
           })

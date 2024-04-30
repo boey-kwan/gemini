@@ -269,8 +269,12 @@ input {
   position:fixed; 
   top:50%;
   color: white;
-  background-color: var(--dark-blue);
+  /* background-color: var(--dark-blue); */
   border-radius: 50%;
   padding: 0.5em;
   font-family: italic;
+}
+
+.trashcan:hover {
+  color: red;
 }

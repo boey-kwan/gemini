@@ -104,7 +104,7 @@ export default function Task(props) {
                     }
                 </form>
                 
-                <button onClick={() => props.deleteTask(props.id)} style={{position: 'relative', float: 'right'}}>
+                <button className='trashcan' onClick={() => props.deleteTask(props.id)} style={{position: 'relative', float: 'right'}}>
                     <DeleteOutlinedIcon/>
                 </button>
 
