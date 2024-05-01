@@ -1,22 +1,26 @@
 import { useState } from 'react';
+import { useLocation , Link } from 'react-router-dom';
 import '../App.css';
 import Task from "./Task";
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 
 export default function Today() {
 
+  // Determine the user and the date
+  const location = useLocation();
+  const dateString = location.pathname.split('/')[2].replace(/%20/g, ' ');
+  const username = location.pathname.split('/')[3];
+  const date = new Date(dateString);
+
   // TODO: Grab all tasks in this day.
   const [taskList, setTaskList] = useState([1, 2]);
   // TODO: Initialize to the first ID in the list.
   const [currentTaskId, setCurrentTaskId] = useState(1);
 
-  const date = new Date();
-  const dateString = date.toDateString();
-
+  // Determine previous and next dates
   const yesterday = new Date();
   yesterday.setDate(date.getDate() - 1);
   const yesterdayString = yesterday.toDateString();
-
   const tomorrow = new Date();
   tomorrow.setDate(date.getDate() + 1);
   const tomorrowString = tomorrow.toDateString();
@@ -34,9 +38,10 @@ export default function Today() {
     return (
       <div>
         <div className='row'>
-          <div className="body-left" > 
+
+          <div className="body-left">
             <button className="day-navigation">
-              {"< " + yesterdayString} 
+              <Link to={`/date/${yesterdayString}/${username}`}>{"< " + yesterdayString} </Link>
             </button>
           </div>
 
@@ -79,7 +84,7 @@ export default function Today() {
 
           <div className="body-right">
             <button className="day-navigation">
-              {tomorrowString + " >"} 
+              <Link to={`/date/${tomorrowString}/${username}`}>{tomorrowString + " >"}</Link>
             </button>
           </div>
 
