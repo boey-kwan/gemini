@@ -24,7 +24,7 @@ export default function Home() {
       <br/>
 
       <button className='button main-button' onClick={() => {navigate("/date/"+dateString+"/"+username)}}>Jump to today's tasks!</button>
-      <button className='button secondary-button' onClick={() => {navigate("/createUser");}}>See memories</button>
+      <button className='button secondary-button' onClick={() => {navigate("/memories");}}>See memories</button>
 
     </div>
   );
