@@ -20,9 +20,13 @@ export default function Today() {
   tomorrow.setDate(date.getDate() + 1);
   const tomorrowString = tomorrow.toDateString();
 
+  // Determine real today's date
+  const today = new Date();
+  const todayString = today.toDateString();
+
   // TODO: Grab all tasks in this day.
   const [taskList, setTaskList] = useState([1, 2]);
-  
+
   // TODO: Initialize to the first ID in the list.
   const [currentTaskId, setCurrentTaskId] = useState(1);
 
@@ -47,7 +51,7 @@ export default function Today() {
           </div>
 
           <div className="body-center scroll">
-            <h1 className='h1'>Today</h1>
+            { dateString == todayString ? <h1 className='h1'>Today's To-Do List</h1> : <h1 className='h1'>To-Do List</h1> }
             <h2 className='h2'>{dateString}</h2>
             <div className='task-list'>
               { taskList.length ? taskList.map((value) => {

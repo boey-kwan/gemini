@@ -59,11 +59,10 @@ export default function Login() {
             id='new-username-field' 
             label="New username" 
             variant='outlined'
-            autoFocus={true}
             fullWidth
             style={{margin:"1em"}}
             onChange={()=>{
-                setUsername(document.getElementById('new-username-field').value);
+                setNewUsername(document.getElementById('new-username-field').value);
             }}/>
     
           <TextField 
@@ -73,7 +72,7 @@ export default function Login() {
             fullWidth
             style={{margin:"1em"}}
             onChange={()=>{
-                setPassword(document.getElementById('new-password-field').value);
+                setNewPassword(document.getElementById('new-password-field').value);
             }}/>
     
           <button className='main-button centered' onClick={() => {navigate("/home/"+ newUsername);}}>Submit</button>
