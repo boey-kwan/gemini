@@ -1,22 +1,23 @@
 import { NavLink } from "react-router-dom";
 import "../App.css";
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 export default function Navbar() {
   return (
     
       <nav>
         <div className="navbar" style={{justifyContent: 'space-between'}}>
-          <NavLink to="/" className="row-item">
-            Logo
+          <NavLink to="/" style={{padding: '2em'}}>
+            <FavoriteIcon />
           </NavLink>
-          <div>
-            <NavLink to="/today" className="row-item navbutton">
+          <div style={{display: 'flex', columnGap: '1em'}}>
+            <NavLink to="/today" className="navbutton">
               Today
             </NavLink>
-            <NavLink to="/memories" className="row-item navbutton">
+            <NavLink to="/memories" className="navbutton">
               Memories
             </NavLink>
-            <NavLink to="/login" className="row-item navbutton loginbutton">
+            <NavLink to="/login" className="navbutton loginbutton">
               Log in
             </NavLink>
           </div>
