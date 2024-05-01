@@ -4,6 +4,9 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 
 export default function Navbar(props) {
 
+  const date = new Date();
+  const dateString = date.toDateString();
+
   return (
     
       <nav>
@@ -12,7 +15,7 @@ export default function Navbar(props) {
             <FavoriteIcon />
           </NavLink>
           <div style={{display: 'flex', columnGap: '1em'}}>
-            <NavLink to={props.loggedIn ? "/date/${username}" : '/login'} className="navbutton">
+            <NavLink to={props.loggedIn ? "/date/" + dateString +  "/${username}" : '/login'} className="navbutton">
               Today
             </NavLink>
             <NavLink to={props.loggedIn ? "/memories" : '/login'} className="navbutton">
