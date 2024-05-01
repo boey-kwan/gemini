@@ -227,12 +227,16 @@ input {
   padding:2em;
 }
 
-.main-button {
+.button {
   width: fit-content;
-  border-radius: 10%;
+  border-radius: 15px;
   background-color: aliceblue;
   padding: 1em;
   cursor: pointer;
+  margin: 1em;
+}
+
+.main-button {
   color: var(--dark-blue);
 }
 
@@ -242,13 +246,7 @@ input {
 }
 
 .secondary-button {
-  width: fit-content;
-  border: 2px solid white;
-  border-radius: 10%;
-  padding: 14px 28px;
-  cursor: pointer;
   color: var(--dark-blue); 
-  margin: 1em;
 }
 
 .secondary-button:hover {
