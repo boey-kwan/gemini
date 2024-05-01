@@ -19,7 +19,7 @@ const Icons = [
 export default function Sidebar(props) {
 
     return (
-      <div className='column' style={{visibility: props.showSidebar ? 'visible' : 'hidden'}}>
+      <div className='column' style={{visibility: props.showSidebar ? 'visible' : 'hidden', zIndex: 9}}>
         <div className='column sidebar shadowed-card' >
           {/* {
             Icons.map((icon) => {
@@ -64,10 +64,10 @@ export default function Sidebar(props) {
           </button>
           
         </div>
-        <div className='shadowed-card' style={{display: 'flex', alignItems: 'center', justifyContent: 'center', aspectRatio:1}}>
+        <div className='shadowed-card' style={{display: 'flex', alignItems: 'center', justifyContent: 'center', aspectRatio:1, borderRadius:'50%'}}>
           <button className='trashcan' onClick={() => props.deleteTask(props.id)}>
-                      <DeleteOutlinedIcon style={{ fontSize: 'calc(var(--icon-size-default) + 2*3px)'}}/>
-                  </button>
+              <DeleteOutlinedIcon style={{ fontSize: 'calc(var(--icon-size-default) + 2*3px)'}}/>
+          </button>
         </div>
       </div>
     );

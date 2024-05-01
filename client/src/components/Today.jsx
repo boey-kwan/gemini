@@ -80,6 +80,7 @@ export default function Today() {
                     setTaskList(
                       [...taskList, taskList.length+1]
                     )
+                    setCurrentTaskId(taskList.length+1)
                   }}>
                   <AddOutlinedIcon/>
                   <div>Add task</div>

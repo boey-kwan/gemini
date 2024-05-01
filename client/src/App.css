@@ -194,8 +194,12 @@ h2, .h2 {
   background-color: aliceblue;
 }
 
+.strong-shadow {
+  box-shadow: 2px 2px 2px 2px #00000033;
+}
+
 .task {
-  width: 90%;
+  width: 92%;
   padding: 1em;
 }
 
