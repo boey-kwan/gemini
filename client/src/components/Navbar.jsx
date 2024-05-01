@@ -1,21 +1,8 @@
 import { NavLink } from "react-router-dom";
 import "../App.css";
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { useEffect, useState } from "react";
-import { useAuth } from '@clerk/clerk-react';
 
 export default function Navbar(props) {
-
-  // const { isSignedIn } = useAuth();
-
-  // const defaultLoggedIn = localStorage.getItem('loggedIn') ? JSON.parse(localStorage.getItem('loggedIn')) : null;
-
-  // const [loggedIn, setLoggedIn] = useState(defaultLoggedIn ?? false);
-
-  // console.log("value of defaultloggedin: ", defaultLoggedIn)
-  // console.log("value of loggedin: ", loggedIn)
-
-
 
   return (
     
