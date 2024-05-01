@@ -7,6 +7,7 @@
   --light-blue: alice-blue;
   --medium-green: rgb(74, 203, 100);
   --dark-green: rgb(38, 195, 69);
+  --icon-size-default: 1em;
 }
 
 :root {
@@ -222,13 +223,13 @@ input {
 }
 
 .sidebar-button {
-  padding: 3px;
-  margin: 0px;
   border-radius: 25%;
-  /* font-size: 5em; */
-  font-size: 50px;
-  height: 50px;
-  width: 50px;
+  font-size: calc(var(--icon-size-default) + 6px);
+  width: 1.5em;
+  height: 1.5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .sidebar-button.clicked {
@@ -238,6 +239,10 @@ input {
 
 .sidebar-button:hover {
   background-color: var(--medium-blue);
+  color: white;
+}
+
+.white {
   color: white;
 }
 

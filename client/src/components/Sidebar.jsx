@@ -37,35 +37,27 @@ export default function Sidebar(props) {
         } */}
 
         <button 
-          onClick={() => props.onClickSidebarIcon('time')} 
-          style={{
-            color: props.showFields['time'] ? 'var(--primary-blue)' : 'black',
-          }}>
-          <AccessTimeIcon className={props.showFields['time'] ? 'sidebar-button clicked' : 'sidebar-button'}/>
+          className={props.showFields['time'] ? 'sidebar-button clicked' : 'sidebar-button'}
+          onClick={() => props.onClickSidebarIcon('time')} >
+          <AccessTimeIcon style={{ fontSize: 'calc(var(--icon-size-default) + 2*3px)', padding: '3px' }} className={props.showFields['time'] ? 'white' : null}/>
         </button>
 
         <button 
-          onClick={() => props.onClickSidebarIcon('location')} 
-          style={{
-            color: props.showFields['location'] ? 'var(--primary-blue)' : 'black',
-          }}>
-          <PlaceOutlined className={props.showFields['location'] ? 'sidebar-button clicked' : 'sidebar-button'}/>
+          className={props.showFields['location'] ? 'sidebar-button clicked' : 'sidebar-button'}
+          onClick={() => props.onClickSidebarIcon('location')} >
+          <PlaceOutlined style={{ fontSize: 'calc(var(--icon-size-default) + 2*3px)', padding: '3px' }} className={props.showFields['location'] ? 'white' : null}/>
         </button>
 
         <button 
-          onClick={() => props.onClickSidebarIcon('description')} 
-          style={{
-            color: props.showFields['description'] ? 'var(--primary-blue)' : 'black',
-          }}>
-          <AutoStoriesOutlinedIcon className={props.showFields['description'] ? 'sidebar-button clicked' : 'sidebar-button'}/>
+          className={props.showFields['description'] ? 'sidebar-button clicked' : 'sidebar-button'}
+          onClick={() => props.onClickSidebarIcon('description')} >
+          <AutoStoriesOutlinedIcon style={{ fontSize: 'calc(var(--icon-size-default) + 2*3px)', padding: '3px' }} className={props.showFields['description'] ? 'white' : null}/>
         </button>
 
         <button 
-          onClick={() => props.onClickSidebarIcon('image')} 
-          style={{
-            color: props.showFields['image'] ? 'var(--primary-blue)' : 'black',
-          }}>
-          <PhotoOutlinedIcon className={props.showFields['image'] ? 'sidebar-button clicked' : 'sidebar-button'}/>
+          className={props.showFields['image'] ? 'sidebar-button clicked' : 'sidebar-button'}
+          onClick={() => props.onClickSidebarIcon('image')} >
+          <PhotoOutlinedIcon style={{ fontSize: 'calc(var(--icon-size-default) + 2*3px)' }} className={props.showFields['image'] ? 'white' : null}/>
         </button>
         
       </div>
