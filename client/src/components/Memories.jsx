@@ -23,7 +23,7 @@ export default function Memories() {
           fullWidth
           style={{margin:"1em", width:"100%"}}
           onChange={()=>{
-              setUsername(document.getElementById('prompt-field').value);
+              setPrompt(document.getElementById('prompt-field').value);
         }}/>
 
         <button className='button main-button'>Go!</button>

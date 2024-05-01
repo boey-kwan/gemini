@@ -3,7 +3,7 @@ import { TextField } from '@mui/material'
 import '../App.css';
 import { useState } from "react";
 
-export default function Login() {
+export default function Login(props) {
 
   const navigate = useNavigate();
   const date = new Date();
@@ -43,8 +43,10 @@ export default function Login() {
           }}/>
 
       <button className='main-button centered' onClick={() => {
-          navigate("/home/"+ username);
-
+        localStorage.setItem('username', username);
+        localStorage.setItem('loggedIn', true);
+        props.setLoggedIn(true);
+        navigate("/home/"+ username);
       }}>Submit</button>
 
     <div className="column login centered">
@@ -74,6 +76,10 @@ export default function Login() {
         }}/>
 
       <button className='main-button centered' onClick={() => {
+        localStorage.setItem('username', newUsername);
+        localStorage.setItem('loggedIn', "true");
+        props.setLoggedIn(true);
+        window.location.reload();
         navigate("/home/"+ newUsername);
         }}>Submit</button>
 

@@ -1,8 +1,22 @@
 import { NavLink } from "react-router-dom";
 import "../App.css";
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import { useEffect, useState } from "react";
+import { useAuth } from '@clerk/clerk-react';
 
-export default function Navbar() {
+export default function Navbar(props) {
+
+  // const { isSignedIn } = useAuth();
+
+  // const defaultLoggedIn = localStorage.getItem('loggedIn') ? JSON.parse(localStorage.getItem('loggedIn')) : null;
+
+  // const [loggedIn, setLoggedIn] = useState(defaultLoggedIn ?? false);
+
+  // console.log("value of defaultloggedin: ", defaultLoggedIn)
+  // console.log("value of loggedin: ", loggedIn)
+
+
+
   return (
     
       <nav>
@@ -11,15 +25,21 @@ export default function Navbar() {
             <FavoriteIcon />
           </NavLink>
           <div style={{display: 'flex', columnGap: '1em'}}>
-            <NavLink to="/today" className="navbutton">
+            <NavLink to="/date/${username}" className="navbutton">
               Today
             </NavLink>
             <NavLink to="/memories" className="navbutton">
               Memories
             </NavLink>
-            <NavLink to="/login" className="navbutton loginbutton">
-              Log in
-            </NavLink>
+            {props.loggedIn ? 
+              <NavLink to="/login" className="navbutton loginbutton" onClick={() => props.setLoggedIn(false)}>
+                Log out
+              </NavLink>
+              :
+              <NavLink to="/login" className="navbutton loginbutton" >
+                Log in
+              </NavLink>
+            }
           </div>
         </div>
       </nav>
