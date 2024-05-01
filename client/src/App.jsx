@@ -16,6 +16,7 @@ const App = () => {
         <div className="body">
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/home/*" element={<Home />} />
             <Route path="/date/*" element={<Today />} />
             <Route path="/memories" element={<Memories />} />
             <Route path="/createUser" element={<CreateUser />} />
