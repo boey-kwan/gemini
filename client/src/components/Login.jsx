@@ -13,86 +13,74 @@ export default function Login() {
   const [newUsername, setNewUsername] = useState("");
   const [newPassword, setNewPassword] = useState("");
 
-  function LoginColumn() {
-    return (
-        <div className="column login centered">
-
-            <h1 className='h1'>Log in</h1>
-
-            <TextField 
-                id='username-field' 
-                label="Username" 
-                variant='outlined'
-                autoFocus={true}
-                fullWidth
-                style={{margin:"1em"}}
-                onChange={()=>{
-                    setUsername(document.getElementById('username-field').value);
-                }}/>
-
-            <TextField 
-                id='password-field' 
-                label="Password" 
-                variant='outlined'
-                fullWidth
-                style={{margin:"1em"}}
-                onChange={()=>{
-                    setPassword(document.getElementById('password-field').value);
-                }}/>
-
-            <button className='main-button centered'>
-                <Link to={`/home/${username}`}>Log in</Link>
-            </button>
-
-        </div>
-        );
-  }
-
-  function CreateUserColumn() {
-    return (
-
-        <div className="column login centered">
-    
-          <h1 className='h1'>Create New User</h1>
-    
-          <TextField 
-            id='new-username-field' 
-            label="New username" 
-            variant='outlined'
-            fullWidth
-            style={{margin:"1em"}}
-            onChange={()=>{
-                setNewUsername(document.getElementById('new-username-field').value);
-            }}/>
-    
-          <TextField 
-            id='new-password-field' 
-            label="New password" 
-            variant='outlined'
-            fullWidth
-            style={{margin:"1em"}}
-            onChange={()=>{
-                setNewPassword(document.getElementById('new-password-field').value);
-            }}/>
-    
-          <button className='main-button centered' onClick={() => {navigate("/home/"+ newUsername);}}>Submit</button>
-    
-        </div>
-      );
-  }
-
-
   return (
 
     <div>
-        <h1 className='h1'>Welcome to Gemini Task Manager!</h1>
 
-        <div className="row">
+      <div className="column login centered">
 
-            <LoginColumn/>;
-            <CreateUserColumn/>;
+      <h1 className='h1'>Log in</h1>
 
-        </div>
+      <TextField 
+        id='username-field' 
+        label="Username" 
+        variant='outlined'
+        fullWidth
+        style={{margin:"1em"}}
+        onChange={()=>{
+          setUsername(document.getElementById('username-field').value);
+        }}
+      />
+
+      <TextField 
+          id='password-field' 
+          label="Password" 
+          variant='outlined'
+          fullWidth
+          style={{margin:"1em"}}
+          onChange={()=>{
+            setPassword(document.getElementById('password-field').value);
+          }}/>
+
+      <button className='main-button centered' onClick={() => {
+          navigate("/home/"+ username);
+
+      }}>Submit</button>
+
+    <div className="column login centered">
+      
+      <h1 className='h1'>Create New User</h1>
+
+      <TextField 
+        id='new-username-field' 
+        label="New username" 
+        variant='outlined'
+        fullWidth
+        style={{margin:"1em"}}
+        value={newUsername}
+        onChange={()=>{
+            setNewUsername(document.getElementById('new-username-field').value);
+        }}/>
+
+      <TextField 
+        id='new-password-field' 
+        label="New password" 
+        variant='outlined'
+        fullWidth
+        style={{margin:"1em"}}
+        value={newPassword}
+        onChange={()=>{
+            setNewPassword(document.getElementById('new-password-field').value);
+        }}/>
+
+      <button className='main-button centered' onClick={() => {
+        navigate("/home/"+ newUsername);
+        }}>Submit</button>
+
+    </div>
+
+      </div>
+        
     </div>
   );
 }
