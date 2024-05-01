@@ -12,10 +12,10 @@ export default function Navbar(props) {
             <FavoriteIcon />
           </NavLink>
           <div style={{display: 'flex', columnGap: '1em'}}>
-            <NavLink to="/date/${username}" className="navbutton">
+            <NavLink to={props.loggedIn ? "/date/${username}" : '/login'} className="navbutton">
               Today
             </NavLink>
-            <NavLink to="/memories" className="navbutton">
+            <NavLink to={props.loggedIn ? "/memories" : '/login'} className="navbutton">
               Memories
             </NavLink>
             {props.loggedIn ? 
