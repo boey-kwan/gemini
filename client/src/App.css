@@ -227,7 +227,7 @@ input {
   padding:2em;
 }
 
-.button {
+.button, .main-button, .secondary-button {
   width: fit-content;
   border-radius: 15px;
   background-color: aliceblue;
