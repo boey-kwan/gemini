@@ -12,11 +12,6 @@ export default function Today() {
   const username = location.pathname.split('/')[3];
   const date = new Date(dateString);
 
-  // TODO: Grab all tasks in this day.
-  const [taskList, setTaskList] = useState([1, 2]);
-  // TODO: Initialize to the first ID in the list.
-  const [currentTaskId, setCurrentTaskId] = useState(1);
-
   // Determine previous and next dates
   const yesterday = new Date();
   yesterday.setDate(date.getDate() - 1);
@@ -24,6 +19,12 @@ export default function Today() {
   const tomorrow = new Date();
   tomorrow.setDate(date.getDate() + 1);
   const tomorrowString = tomorrow.toDateString();
+
+  // TODO: Grab all tasks in this day.
+  const [taskList, setTaskList] = useState([1, 2]);
+  
+  // TODO: Initialize to the first ID in the list.
+  const [currentTaskId, setCurrentTaskId] = useState(1);
 
   function updateCurrentTaskId(id) {
     setCurrentTaskId(id);
