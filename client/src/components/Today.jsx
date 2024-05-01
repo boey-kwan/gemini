@@ -46,7 +46,7 @@ export default function Today() {
           </div>
 
           <div className="body-center scroll">
-            <h1 className='h1'>Today's To-Do List</h1>
+            <h1 className='h1'>Today</h1>
             <h2 className='h2'>{dateString}</h2>
             <div className='task-list'>
               { taskList.length ? taskList.map((value) => {

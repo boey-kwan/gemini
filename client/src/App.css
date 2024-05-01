@@ -5,6 +5,7 @@
   --dark-blue: #4b8bca;
   --medium-blue: rgb(142, 216, 246);
   --light-blue: alice-blue;
+  --medium-green: rgb(74, 203, 100);
 }
 
 :root {
@@ -127,6 +128,7 @@ h2, .h2 {
 .body {
   height: 100%;
   padding-top: calc(var(--navbar-height) + 1em);
+  padding-bottom: 2em;
 }
 
 .body-center {
@@ -192,17 +194,22 @@ input {
 
 .sidebar-button {
   padding: 3px;
-  border-radius: 20%;
-}
-
-.sidebar-button:hover {
-  background-color: #d5d5d5;
-  color: white;
+  margin: 0px;
+  border-radius: 25%;
+  /* font-size: 5em; */
+  font-size: 50px;
+  height: 50px;
+  width: 50px;
 }
 
 .sidebar-button.clicked {
-  background-color: #d5d5d5;
-  color: aliceblue;
+  background-color: rgb(162, 162, 162);
+  color: white;
+}
+
+.sidebar-button:hover {
+  background-color: var(--medium-blue);
+  color: white;
 }
 
 .column {
@@ -222,17 +229,15 @@ input {
 
 .main-button {
   width: fit-content;
-  border: 2px solid white;
   border-radius: 10%;
   background-color: aliceblue;
-  padding: 14px 28px;
+  padding: 1em;
   cursor: pointer;
   color: var(--dark-blue);
-  margin: 1em;
 }
 
 .main-button:hover {
-  background: var(--dark-blue);
+  background: var(--medium-green);
   color: white;
 }
 
