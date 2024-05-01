@@ -1,5 +1,5 @@
 import '../App.css'
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { Checkbox, TextField } from '@mui/material'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -15,7 +15,9 @@ export default function Task(props) {
 
     // Each task has its own ID.
 
-    const taskRef = useRef();
+    const taskRef = useRef(null);
+
+    const [height, setHeight] = useState(0)
 
     const [checked, setChecked] = useState(false);
 
@@ -33,12 +35,16 @@ export default function Task(props) {
         setShowFields({...showFields, [fieldName]: !showFields[fieldName]});
     }
 
-    return (
-        <>
-        <div className='row' style={{width:'100%'}}>
-        <div className='column sidebar' />
+    useEffect(() => {
+        setHeight(taskRef.current.clientHeight)
+    })
+    
+    console.log("Render task height to be: " + height)
 
-            <div className="task shadowed-card" 
+    return (
+        <div className='row' style={{width: '100%', height: height, alignItems: 'flex-start', oveflow: 'visible'}}>
+
+            <div className={props.showSidebar ? "task shadowed-card strong-shadow" : "task shadowed-card"}
                 ref={taskRef}
                 onClick={()=>props.onClick(props.id)}
             >
@@ -125,15 +131,10 @@ export default function Task(props) {
                         : null
                     }
                 </form>
-                {/* <button className='trashcan' onClick={() => props.deleteTask(props.id)} style={{ marginTop: '0.5em', position: 'relative', float: 'right'}}>
-                    <DeleteOutlinedIcon/>
-                </button> */}
 
-            </div>
-
-            <Sidebar onClickSidebarIcon={onClickSidebarIcon} showSidebar={props.showSidebar} showFields={showFields} deleteTask={() => props.deleteTask(props.id)}/>
             </div>
             
-        </>
+            <Sidebar onClickSidebarIcon={onClickSidebarIcon} showSidebar={props.showSidebar} showFields={showFields} deleteTask={() => props.deleteTask(props.id)}/>
+        </div>
     );
   }
