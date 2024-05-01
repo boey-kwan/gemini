@@ -1,11 +1,12 @@
 :root {
-  --navbar-height: 3em;
+  --navbar-height: 3.5em;
   --body-margin-side: 10%;
   --body-padding: 2em;
   --dark-blue: #4b8bca;
   --medium-blue: rgb(142, 216, 246);
   --light-blue: alice-blue;
   --medium-green: rgb(74, 203, 100);
+  --dark-green: rgb(38, 195, 69);
 }
 
 :root {
@@ -102,12 +103,40 @@ h2, .h2 {
   left: 0;
   height: var(--navbar-height);
   font-size: 1em;
-  background-color: var(--dark-blue);
+  background-color: rgb(201, 241, 255);
   width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
   z-index: 10;
+  padding-left: 2%;
+  padding-right: 2%;
+}
+
+.navbutton {
+  padding-left: 0.8em;
+  padding-right: 0.8em;
+  padding-top: 0.5em;
+  padding-bottom: 0.6em;
+  border-radius: 20px;
+  font-weight: 500;
+  font-size: medium;
+  color: var(--dark-blue);
+}
+
+.navbutton:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.loginbutton {
+  border-radius: 20px;
+  background-color: var(--medium-green);
+  color: white;
+}
+
+.loginbutton:hover {
+  background-color: white;
+  color: var(--dark-green);
 }
 
 .row {
