@@ -13,95 +13,73 @@ export default function Login(props) {
 	const [newPassword, setNewPassword] = useState("");
 
 	return (
-		<div>
-			<div className="column login centered">
-				<h1 className="h1">Log in</h1>
+    <div className="row" style={{justifyContent: 'center', columnGap: '5%'}}>
 
-				<TextField
-					id="username-field"
-					label="Username"
-					variant="outlined"
-					fullWidth
-					style={{ margin: "1em" }}
-					onChange={() => {
-						setUsername(
-							document.getElementById("username-field").value
-						);
-					}}
-				/>
+      <div className="column login shadowed-card strong-shadow" >
+        <h1 className='h1'>Log in</h1>
+        <br/>
 
-				<TextField
-					id="password-field"
-					label="Password"
-					variant="outlined"
-					fullWidth
-					style={{ margin: "1em" }}
-					onChange={() => {
-						setPassword(
-							document.getElementById("password-field").value
-						);
-					}}
-				/>
+        <TextField 
+          id='username-field' 
+          label="Username" 
+          variant='outlined'
+          fullWidth
+          onChange={()=>{
+            setUsername(document.getElementById('username-field').value);
+          }}
+        />
 
-				<button
-					className="main-button centered"
-					onClick={() => {
-						localStorage.setItem("username", username);
-						localStorage.setItem("loggedIn", true);
-						props.setLoggedIn(true);
-						navigate("/home/" + username);
-					}}
-				>
-					Submit
-				</button>
+        <TextField 
+            id='password-field' 
+            label="Password" 
+            variant='outlined'
+            fullWidth
+            onChange={()=>{
+              setPassword(document.getElementById('password-field').value);
+            }}/>
 
-				<div className="column login centered">
-					<h1 className="h1">Create New User</h1>
+        <button className='main-button outlined centered' onClick={() => {
+          localStorage.setItem('username', username);
+          localStorage.setItem('loggedIn', true);
+          props.setLoggedIn(true);
+          navigate("/home/"+ username);
+        }}>Submit</button>
+      </div>
 
-					<TextField
-						id="new-username-field"
-						label="New username"
-						variant="outlined"
-						fullWidth
-						style={{ margin: "1em" }}
-						value={newUsername}
-						onChange={() => {
-							setNewUsername(
-								document.getElementById("new-username-field")
-									.value
-							);
-						}}
-					/>
+      <div className="column login shadowed-card strong-shadow" >
+        
+        <h1 className='h1'>Create New User</h1>
+        <br/>
 
-					<TextField
-						id="new-password-field"
-						label="New password"
-						variant="outlined"
-						fullWidth
-						style={{ margin: "1em" }}
-						value={newPassword}
-						onChange={() => {
-							setNewPassword(
-								document.getElementById("new-password-field")
-									.value
-							);
-						}}
-					/>
+        <TextField 
+          id='new-username-field' 
+          label="New username" 
+          variant='outlined'
+          fullWidth
+          value={newUsername}
+          onChange={()=>{
+              setNewUsername(document.getElementById('new-username-field').value);
+          }}/>
 
-					<button
-						className="main-button centered"
-						onClick={() => {
-							localStorage.setItem("username", newUsername);
-							localStorage.setItem("loggedIn", "true");
-							props.setLoggedIn(true);
-							window.location.reload();
-							navigate("/home/" + newUsername);
-						}}
-					>
-						Submit
-					</button>
-				</div>
-			</div>
-		</div>
-	);
+        <TextField 
+          id='new-password-field' 
+          label="New password" 
+          variant='outlined'
+          fullWidth
+          value={newPassword}
+          onChange={()=>{
+              setNewPassword(document.getElementById('new-password-field').value);
+          }}/>
+
+        <button className='main-button outlined centered' onClick={() => {
+          localStorage.setItem('username', newUsername);
+          localStorage.setItem('loggedIn', "true");
+          props.setLoggedIn(true);
+          window.location.reload();
+          navigate("/home/"+ newUsername);
+          }}>Submit</button>
+
+      </div>
+    </div>
+  );
 }
