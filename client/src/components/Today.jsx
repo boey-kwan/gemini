@@ -35,14 +35,46 @@ let myData = [
 ]
 
 function getData({ username, date }) {
-
-	const data2 = myData.map((x) => ([x.taskId, x]))
+	const data = myData.map((x) => ([x.taskId, x]))
 	return {
 		status: true,
 		message: "Success",
-		data: Object.fromEntries(data2)
+		data: Object.fromEntries(data)
 	};
 }
+
+function postData({ username, date, data }) {
+	console.log("data is", data)
+	if (true) {
+		myData = Object.values(data)
+		return {
+			status: true,
+			message: "Success",
+			data: Object.values(data)
+		}
+	}
+
+	const params = {
+		username: username,
+		date: date,
+		data: data,
+	}
+
+	const options = {
+		method: 'POST',
+		body: JSON.stringify (params)
+	}
+
+	const url = `http://localhost:5000/api/tasks/${username}/${date}`;
+
+	const response = fetch(url, options)
+		.then(response => response.json())
+		.then(data => {
+			return data;
+		})
+
+}
+
 // async function getData({ username, date }) {
 // 	const url = `http://localhost:5000/api/tasks/${username}/${date}`;
 
@@ -165,17 +197,19 @@ export default function Today() {
 		setTaskList({id: task, ...taskList});
 	}
 
+	function deleteTask (id) {
+		const copy = {...taskList};
+		delete copy[id];
+		setTaskList({...copy});
+		postData({username:"username", date:"date", data:copy})
+	}
+
 	// TODO: Initialize to the first ID in the list.
 	const [currentTaskId, setCurrentTaskId] = useState(1);
 
 	function updateCurrentTaskId(id) {
 		setCurrentTaskId(id);
 		// console.log("current task: " + id);
-	}
-
-	function deleteTaskWithId(id) {
-		// console.log(taskList.filter((value) => value !== id));
-		setTaskList(taskList.filter((value) => value !== id));
 	}
 
 	useEffect(() => {
@@ -220,7 +254,7 @@ export default function Today() {
 										value={value}
 										showSidebar={currentTaskId == value.taskId}
 										onClick={updateCurrentTaskId}
-										deleteTask={deleteTaskWithId}
+										deleteTask={deleteTask}
 										updateTaskList={updateTaskList}
 										showFields={{
 											description: value.description.length > 0,
@@ -257,7 +291,43 @@ export default function Today() {
 								width: "fit-content",
 							}}
 							onClick={() => {
-								setTaskList([...taskList, taskList.length + 1]);
+								let copy = {...taskList};
+								console.log("taskList length", );
+								const taskId = Object.keys(taskList).length + 1;
+								copy[taskId] = {
+									taskId: taskId,
+									title: "",
+									fromTime: "",
+									toTime: "",
+									location: "",
+									description: "",
+									imgUrl: "",
+								};
+								// const list = Object.assign([], {...taskList})
+								console.log("taskList AAAAA", copy);
+								// console.log("taskList thnigy is", {...taskList, [Object.keys(taskList).length + 1]:{
+								// 	taskId: taskList.length + 1,
+								// 	title: "",
+								// 	fromTime: "",
+								// 	toTime: "",
+								// 	location: "",
+								// 	description: "",
+								// 	imgUrl: ""
+								// }});
+
+								const newTaskList = {...taskList, [taskId]:{
+									taskId: taskId,
+									title: "",
+									fromTime: "",
+									toTime: "",
+									location: "",
+									description: "",
+									imgUrl: ""
+								}}
+								setTaskList(newTaskList);
+								console.log("newTaskList", newTaskList)
+								// [...Object.values(taskList),]
+								postData({username:username, date:date, data:newTaskList }); // Add a comma after 'date'
 								setCurrentTaskId(taskList.length + 1);
 							}}
 						>
