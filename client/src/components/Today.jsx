@@ -57,7 +57,7 @@ function getData({ username, date }) {
 }
 
 function postData({ username, date, data }) {
-	console.log("data is", data)
+	// console.log("data is", data)
 	if (true) {
 		myData = Object.values(data)
 		return {
@@ -148,6 +148,7 @@ function updateField(id, fieldName, value) {
 }
 
 export default function Today() {
+	
 	// Determine the user and the date
 	const location = useLocation();
 	const dateString = location.pathname.split("/")[2].replace(/%20/g, " ");
@@ -225,7 +226,8 @@ export default function Today() {
 
 	useEffect(() => {
 		async function fetchData() {
-			const response = await getData({ username, date: dateString });
+			// const response = await getData({ username, date: dateString });
+			const response =  getData({ username, date: dateString });
 
 			setTaskList(response.data);
 
@@ -256,7 +258,7 @@ export default function Today() {
 						{Object.keys(taskList).length ? (
 							Object.assign([], {...taskList}).map(value => {
 
-								console.log("value", value);
+								// console.log("value", value);
 
 								return (
 									<Task
@@ -267,12 +269,6 @@ export default function Today() {
 										onClick={updateCurrentTaskId}
 										deleteTask={deleteTask}
 										updateTaskList={updateTaskList}
-										showFields={{
-											description: value.description.length > 0,
-											time: value.fromTime.length > 0 || value.toTime.length > 0,
-											location: value.location.length > 0,
-											image: value.imgUrl.length > 0,
-										}}
 									/>
 								);
 							})
@@ -303,7 +299,7 @@ export default function Today() {
 							}}
 							onClick={() => {
 								let copy = {...taskList};
-								console.log("taskList length", );
+								// console.log("taskList length", );
 								const taskId = Object.keys(taskList).length + 1;
 								copy[taskId] = {
 									taskId: taskId,
@@ -315,7 +311,7 @@ export default function Today() {
 									imgUrl: "",
 								};
 								// const list = Object.assign([], {...taskList})
-								console.log("taskList AAAAA", copy);
+								// console.log("taskList AAAAA", copy);
 								// console.log("taskList thnigy is", {...taskList, [Object.keys(taskList).length + 1]:{
 								// 	taskId: taskList.length + 1,
 								// 	title: "",
@@ -336,7 +332,7 @@ export default function Today() {
 									imgUrl: ""
 								}}
 								setTaskList(newTaskList);
-								console.log("newTaskList", newTaskList)
+								// console.log("newTaskList", newTaskList)
 								// [...Object.values(taskList),]
 								postData({username:username, date:date, data:newTaskList }); // Add a comma after 'date'
 								setCurrentTaskId(taskList.length + 1);

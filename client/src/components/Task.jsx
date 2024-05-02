@@ -22,7 +22,25 @@ export default function Task(props) {
     const [checked, setChecked] = useState(false);
 
     // Dictionary of task fields
-    const [showFields, setShowFields] = useState({"description": true, "time": false, "location": false, "image": false})
+    const [showFields, setShowFields] = useState(
+        {
+            description: true,
+            time: false,
+            location: false,
+            image: false,
+        }
+    )
+
+    function updateShowFields() {
+        setShowFields(
+            {
+                description: props.value.description.length > 0,
+                time: props.value.fromTime.length > 0 || props.value.toTime.length > 0,
+                location: props.value.location.length > 0,
+                image: props.value.imgUrl.length > 0,
+            }
+        )
+    }
 
     // The current content of each field
     const [description, setDescription] = useState("desc");
@@ -35,9 +53,17 @@ export default function Task(props) {
         setShowFields({...showFields, [fieldName]: !showFields[fieldName]});
     }
 
+    const firstRender = useRef(true);
+
     useEffect(() => {
+        if (firstRender.current) {
+            firstRender.current = false;
+            updateShowFields();
+            return;
+        }
         setHeight(taskRef.current.clientHeight)
-        setShowFields({...props.showFields});
+        // setShowFields({...props.showFields});
+        // updateShowFields();
     })
 
     return (
@@ -162,7 +188,12 @@ export default function Task(props) {
 
             </div>
             
-            <Sidebar onClickSidebarIcon={onClickSidebarIcon} showSidebar={props.showSidebar} showFields={showFields} deleteTask={() => props.deleteTask(props.id)}/>
+            <Sidebar 
+                onClickSidebarIcon={onClickSidebarIcon} 
+                showSidebar={props.showSidebar} 
+                showFields={showFields} 
+                setShowFields={setShowFields}
+                deleteTask={() => props.deleteTask(props.id)}/>
         </div>
     );
   }

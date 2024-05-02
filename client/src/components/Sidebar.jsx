@@ -40,14 +40,21 @@ export default function Sidebar(props) {
 
           <button 
             className={props.showFields['time'] ? 'sidebar-button clicked' : 'sidebar-button'}
-            onClick={() => props.onClickSidebarIcon('time')} 
+            onClick={
+              () => {
+                props.onClickSidebarIcon('time');
+                {showFields['time'] ? setShowFields({...showFields, time: false}) : setShowFields({...showFields, time: true})}
+              }
+            } 
   >
             <AccessTimeIcon style={{ fontSize: 'calc(var(--icon-size-default) + 2*3px)', padding: '3px' }} className={props.showFields['time'] ? 'white' : null}/>
           </button>
 
           <button 
             className={props.showFields['location'] ? 'sidebar-button clicked' : 'sidebar-button'}
-            onClick={() => props.onClickSidebarIcon('location')} >
+            onClick={
+              () => props.onClickSidebarIcon('location')
+              } >
             <PlaceOutlined style={{ fontSize: 'calc(var(--icon-size-default) + 2*3px)', padding: '3px' }} className={props.showFields['location'] ? 'white' : null}/>
           </button>
 
