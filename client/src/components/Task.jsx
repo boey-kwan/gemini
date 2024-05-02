@@ -39,7 +39,7 @@ export default function Task(props) {
         setHeight(taskRef.current.clientHeight)
     })
     
-    console.log("Render task height to be: " + height)
+    // console.log("Render task height to be: " + height)
 
     return (
         <div className='row' style={{width: '100%', height: height, alignItems: 'flex-start', oveflow: 'visible'}}>
@@ -55,7 +55,13 @@ export default function Task(props) {
                         variant='outlined'
                         size='small'
                         style={{width:'calc(100% - 2.5em)'}}
-                        fullWidth/>
+                        fullWidth
+                        value={props.value.title}
+                        InputLabelProps={{ shrink: true }}  
+                        onChange={(e) => {
+                            props.updateTaskList(props.id, "title", e.target.value)
+                        }}
+                        />
 
                         {/* todo: change field height, and make it bold */}
 
@@ -78,10 +84,21 @@ export default function Task(props) {
                             <LocalizationProvider dateAdapter={AdapterDayjs} style={{visibility: true}}>
                             <div className='row' style={{justifyContent: 'flex-start', columnGap: '1em'}}>
                                 From
-                                <TimePicker slotProps={{ textField: { size: 'small' } }} value={startTime} onChange={(x) => { if (x) setStartTime(x) }}/>
+                                <TextField type="time"
+                                    value={props.value.fromTime} 
+                                    onChange={(x) => { 
+                                        if (x) setStartTime(x) 
+                                        props.updateTaskList(props.id, "fromTime", x.target.value)
+                                    }}
+                                />
                                 to
-                                {/* Todo: Make end time optional */}
-                                <TimePicker slotProps={{ textField: { size: 'small' } }} value={endTime} onChange={(x) => { if (x) setEndTime(x) }}/>
+                                <TextField type="time"
+                                    value={props.value.toTime} 
+                                    onChange={(x) => { 
+                                        if (x) setStartTime(x) 
+                                        props.updateTaskList(props.id, "toTime", x.target.value)
+                                    }}
+                                />
                             </div>
                         </LocalizationProvider>
                         </div>
@@ -98,7 +115,13 @@ export default function Task(props) {
                                 label="Location" 
                                 variant='outlined'
                                 size='small'
-                                fullWidth/>
+                                fullWidth
+                                value={props.value.location}
+                                InputLabelProps={{ shrink: true }}  
+                                onChange={(e) => {
+                                    props.updateTaskList(props.id, "location", e.target.value)
+                                }}
+                                />
 
                         </div>
                         : null
@@ -115,7 +138,13 @@ export default function Task(props) {
                                 label="Description" 
                                 variant='outlined'
                                 size='small'
-                                fullWidth/>
+                                fullWidth
+                                value={props.value.description}
+                                InputLabelProps={{ shrink: true }}  
+                                onChange={(e) => {
+                                    props.updateTaskList(props.id, "description", e.target.value)
+                                }}
+                                />
                         </div>
                         : null
                     }

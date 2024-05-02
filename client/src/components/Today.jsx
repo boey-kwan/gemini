@@ -4,31 +4,46 @@ import "../App.css";
 import Task from "./Task";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 
-async function getData({ username, date }) {
+let myData = [
+	{
+		taskId: 1,
+		title: "Task 1",
+		fromTime: "12:00",
+		toTime: "13:00",
+		location: "Home",
+		description: "Description 1",
+		imgUrl: "url",
+	},
+	{
+		taskId: 2,
+		title: "Task 2",
+		from: "14:00",
+		to: "15:00",
+		location: "Home",
+		description: "Description 2",
+		imgUrl: "url",
+	},
+	{
+		taskId: 3,
+		title: "Task 3",
+		from: "16:00",
+		to: "17:00",
+		location: "Home",
+		description: "Description 3",
+		imgUrl: "url",
+	}
+]
+
+function getData({ username, date }) {
 	console.log(username, date);
+
+	const data2 = myData.map((x) => ([x.taskId, x]))
+	console.log("Object.fromEntries(data2) ")
+	console.log(Object.fromEntries(data2))
 	return {
 		status: true,
 		message: "Success",
-		data: [
-			{
-				taskId: 1,
-				title: "Task 1",
-				fromTime: "12:00",
-				toTime: "13:00",
-				location: "Home",
-				description: "Description 1",
-				imgUrl: "url",
-			},
-			{
-				taskId: 2,
-				title: "Task 2",
-				from: "14:00",
-				to: "15:00",
-				location: "Home",
-				description: "Description 2",
-				imgUrl: "url",
-			},
-		],
+		data: Object.fromEntries(data2)
 	};
 }
 // async function getData({ username, date }) {
@@ -57,6 +72,41 @@ async function getData({ username, date }) {
 
 // 	return await response.json();
 // }
+
+function updateField(id, fieldName, value) {
+	let copy = {...myData[0]};
+	console.log("value: ", value);
+
+	for (let i = 0; i < myData.length; i++) {
+		if (myData[i].taskId == id) {
+			console.log("Updating field: " + fieldName + " to " + value);
+			let copy = {...myData[i]};
+			switch(fieldName) {
+				case "title": 
+					copy.title = value;
+					console.log("Updated to: ", myData[i].title);
+					break;
+				case "fromTime":
+					copy.fromTime = value;
+					break;
+				case "toTime":
+					copy.toTime = value;
+					break;
+				case "location":
+					copy.location = value;
+					break;
+				case "description":
+					copy.description = value;
+					break;
+				case "imgUrl":
+					copy.imgUrl = value;
+					break;
+			}
+		}
+		myData[i] = copy;
+	}
+}
+
 export default function Today() {
 	// Determine the user and the date
 	const location = useLocation();
@@ -76,8 +126,49 @@ export default function Today() {
 	const today = new Date();
 	const todayString = today.toDateString();
 
+	let data = null
+	// getData({username:"username", date:"date"}).then(x => 
+	// 	{data = x.data;
+	// 	console.log(data);}
+	// )
+	
 	// TODO: Grab all tasks in this day.
-	const [taskList, setTaskList] = useState([1, 2]);
+	const [taskList, setTaskList] = useState(getData({username:"username", date:"date"}).data)
+	console.log("A", getData({username:"username", date:"date"}))
+	console.log("B", getData({username:"username", date:"date"}).data)
+
+	console.log("data", data)
+	console.log("as list", Object.assign([], {...taskList}))
+	
+
+	function updateTaskList(id, fieldName, value) {
+		console.log("ID", id)
+		console.log("fieldName", fieldName)
+		console.log("value", value)
+		const task = taskList[id];
+		switch(fieldName) {
+			case "title": 
+				task.title = value;
+				console.log("Updated to: ", task.title);
+				break;
+			case "fromTime":
+				task.fromTime = value;
+				break;
+			case "toTime":
+				task.toTime = value;
+				break;
+			case "location":
+				task.location = value;
+				break;
+			case "description":
+				task.description = value;
+				break;
+			case "imgUrl":
+				task.imgUrl = value;
+				break;
+		}
+		setTaskList({id: task, ...taskList});
+	}
 
 	// TODO: Initialize to the first ID in the list.
 	const [currentTaskId, setCurrentTaskId] = useState(1);
@@ -102,6 +193,7 @@ export default function Today() {
 		}
 		fetchData();
 	}, []);
+
 	return (
 		<div>
 			<div className="row">
@@ -121,15 +213,17 @@ export default function Today() {
 					)}
 					<h2 className="h2">{dateString}</h2>
 					<div className="task-list">
-						{taskList.length ? (
-							taskList.map((value) => {
+						{Object.keys(taskList).length ? (
+							Object.assign([], {...taskList}).map(value => {
 								return (
 									<Task
-										key={value}
-										id={value}
-										showSidebar={currentTaskId == value}
+										key={value.taskId}
+										id={value.taskId}
+										value={value}
+										showSidebar={currentTaskId == value.taskId}
 										onClick={updateCurrentTaskId}
 										deleteTask={deleteTaskWithId}
+										updateTaskList={updateTaskList}
 									/>
 								);
 							})
