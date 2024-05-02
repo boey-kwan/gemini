@@ -11,7 +11,7 @@ const router = express.Router()
 // deeper routes
 router.use('/days', daysRouter)
 router.use('/tasks', tasksRouter)
-router.use('/memories', memoriesRouter) //
+router.use('/memories', memoriesRouter)
 router.use('/photos', photosRouter)
 
 // Edit User
