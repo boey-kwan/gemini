@@ -301,10 +301,10 @@ async function runChat() {
 		}\nPhoto IDs: ${task.photoIDs.join(", ")}`;
 	});
 
-	const result = await model.generateContent(prompt);
+	const res = await model.generateContent(prompt);
 	// const result = await chat.sendMessage("Tell me about Pokemon in under 100 words");
 
-	console.log(result.response.text());
+	console.log(res.response.text());
 }
 
 runChat();
