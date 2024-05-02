@@ -17,8 +17,8 @@ let myData = [
 	{
 		taskId: 2,
 		title: "Task 2",
-		from: "14:00",
-		to: "15:00",
+		fromTime: "14:00",
+		toTime: "15:00",
 		location: "Home",
 		description: "Description 2",
 		imgUrl: "url",
@@ -26,8 +26,8 @@ let myData = [
 	{
 		taskId: 3,
 		title: "Task 3",
-		from: "16:00",
-		to: "17:00",
+		fromTime: "16:00",
+		toTime: "17:00",
 		location: "Home",
 		description: "Description 3",
 		imgUrl: "url",
@@ -35,11 +35,8 @@ let myData = [
 ]
 
 function getData({ username, date }) {
-	console.log(username, date);
 
 	const data2 = myData.map((x) => ([x.taskId, x]))
-	console.log("Object.fromEntries(data2) ")
-	console.log(Object.fromEntries(data2))
 	return {
 		status: true,
 		message: "Success",
@@ -75,16 +72,14 @@ function getData({ username, date }) {
 
 function updateField(id, fieldName, value) {
 	let copy = {...myData[0]};
-	console.log("value: ", value);
 
 	for (let i = 0; i < myData.length; i++) {
 		if (myData[i].taskId == id) {
-			console.log("Updating field: " + fieldName + " to " + value);
+			// console.log("Updating field: " + fieldName + " to " + value);
 			let copy = {...myData[i]};
 			switch(fieldName) {
 				case "title": 
 					copy.title = value;
-					console.log("Updated to: ", myData[i].title);
 					break;
 				case "fromTime":
 					copy.fromTime = value;
@@ -134,22 +129,22 @@ export default function Today() {
 	
 	// TODO: Grab all tasks in this day.
 	const [taskList, setTaskList] = useState(getData({username:"username", date:"date"}).data)
-	console.log("A", getData({username:"username", date:"date"}))
-	console.log("B", getData({username:"username", date:"date"}).data)
 
-	console.log("data", data)
-	console.log("as list", Object.assign([], {...taskList}))
+	// console.log("A", getData({username:"username", date:"date"}))
+	// console.log("B", getData({username:"username", date:"date"}).data)
+	// console.log("data", data)
+	// console.log("as list", Object.assign([], {...taskList}))
 	
 
 	function updateTaskList(id, fieldName, value) {
-		console.log("ID", id)
-		console.log("fieldName", fieldName)
-		console.log("value", value)
+		// console.log("ID", id)
+		// console.log("fieldName", fieldName)
+		// console.log("value", value)
 		const task = taskList[id];
 		switch(fieldName) {
 			case "title": 
 				task.title = value;
-				console.log("Updated to: ", task.title);
+				// console.log("Updated to: ", task.title);
 				break;
 			case "fromTime":
 				task.fromTime = value;
@@ -175,11 +170,11 @@ export default function Today() {
 
 	function updateCurrentTaskId(id) {
 		setCurrentTaskId(id);
-		console.log("current task: " + id);
+		// console.log("current task: " + id);
 	}
 
 	function deleteTaskWithId(id) {
-		console.log(taskList.filter((value) => value !== id));
+		// console.log(taskList.filter((value) => value !== id));
 		setTaskList(taskList.filter((value) => value !== id));
 	}
 
@@ -189,7 +184,7 @@ export default function Today() {
 
 			setTaskList(response.data);
 
-			console.log(response.data);
+			// console.log(response.data);
 		}
 		fetchData();
 	}, []);
@@ -215,6 +210,9 @@ export default function Today() {
 					<div className="task-list">
 						{Object.keys(taskList).length ? (
 							Object.assign([], {...taskList}).map(value => {
+
+								console.log("value", value);
+
 								return (
 									<Task
 										key={value.taskId}
@@ -224,6 +222,12 @@ export default function Today() {
 										onClick={updateCurrentTaskId}
 										deleteTask={deleteTaskWithId}
 										updateTaskList={updateTaskList}
+										showFields={{
+											description: value.description.length > 0,
+											time: value.fromTime.length > 0 || value.toTime.length > 0,
+											location: value.location.length > 0,
+											image: value.imgUrl.length > 0,
+										}}
 									/>
 								);
 							})

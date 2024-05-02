@@ -37,9 +37,8 @@ export default function Task(props) {
 
     useEffect(() => {
         setHeight(taskRef.current.clientHeight)
+        setShowFields({...props.showFields});
     })
-    
-    // console.log("Render task height to be: " + height)
 
     return (
         <div className='row' style={{width: '100%', height: height, alignItems: 'flex-start', oveflow: 'visible'}}>
@@ -62,8 +61,6 @@ export default function Task(props) {
                             props.updateTaskList(props.id, "title", e.target.value)
                         }}
                         />
-
-                        {/* todo: change field height, and make it bold */}
 
                     <Checkbox
                         className='checkbox' 
