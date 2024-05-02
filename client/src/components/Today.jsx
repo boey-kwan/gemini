@@ -4,6 +4,19 @@ import "../App.css";
 import Task from "./Task";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 
+// Date is in the form "new Date()"
+function getDateString (date) {
+
+	const dayOfWeek = dateString.getDay()
+	const month = dateString.getMonth()
+	const dayOfMonth = dateString.getDate()
+	const year = dateString.getFullYear()
+
+	const dateString = dayOfWeek + ', ' + month + ' ' + dayOfMonth + ', ' + year
+
+	return dateString	
+}
+
 let myData = [
 	{
 		taskId: 1,
@@ -142,11 +155,9 @@ export default function Today() {
 	const date = new Date(dateString);
 
 	// Determine previous and next dates
-	const yesterday = new Date();
-	yesterday.setDate(date.getDate() - 1);
+	const yesterday = new Date(date.valueOf() - 1000*60*60*24*1);
 	const yesterdayString = yesterday.toDateString();
-	const tomorrow = new Date();
-	tomorrow.setDate(date.getDate() + 1);
+	const tomorrow = new Date(date.valueOf() + 1000*60*60*24*1);
 	const tomorrowString = tomorrow.toDateString();
 
 	// Determine real today's date
