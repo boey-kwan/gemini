@@ -8,8 +8,8 @@ import { CORS_CONFIG, SERVER_BASE_URL } from '../constants'
 var initialState = {
 	user: null,
 	isLoggedIn: false,
-	login: () => {},
-	signup: () => {},
+	login: async () => {},
+	signup: async () => {},
 	signout: () => {},
 }
 
@@ -27,7 +27,7 @@ export default function AuthProvider({ children }) {
 
 	const verifyToken = useCallback(async (t) => {
 		try {
-			const response = await fetch(`${SERVER_BASE_URL}/verify`, {
+			const response = await fetch(`${SERVER_BASE_URL}/auth/verify`, {
 				method: 'GET',
 				headers: {
 					...CORS_CONFIG,
@@ -44,7 +44,7 @@ export default function AuthProvider({ children }) {
 
 	const login = useCallback(async ({ username, password }) => {
 		try {
-			const res = await fetch(`${SERVER_BASE_URL}/login`, {
+			const res = await fetch(`${SERVER_BASE_URL}/auth/login`, {
 				method: 'POST',
 				headers: {
 					...CORS_CONFIG,
@@ -97,7 +97,7 @@ export default function AuthProvider({ children }) {
 
 	const signup = useCallback(async ({ username, password }) => {
 		try {
-			const res = await fetch(`${SERVER_BASE_URL}/signup`, {
+			const res = await fetch(`${SERVER_BASE_URL}/auth/signup`, {
 				method: 'POST',
 				headers: {
 					...CORS_CONFIG,

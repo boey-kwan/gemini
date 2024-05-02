@@ -1,11 +1,14 @@
 import express from 'express'
 import jwt from 'jsonwebtoken'
+import env from 'dotenv'
+
+env.config()
 
 const router = express.Router()
 
 router.post('/login', (req, res) => {
-	const { email, password } = req.body
-	const result = login({ email, password })
+	const { username, password } = req.body
+	const result = login({ username, password })
 	if (result.status) {
 		res.status(200).json({
 			status: true,
@@ -19,8 +22,8 @@ router.post('/login', (req, res) => {
 	}
 })
 
-function login({ email, password }) {
-	if (!email || !password) {
+function login({ username, password }) {
+	if (!username || !password) {
 		return res.status(400).json({
 			status: false,
 			message: 'Missing required fields',
@@ -29,7 +32,7 @@ function login({ email, password }) {
 
 	const user = prisma.user.findUnique({
 		where: {
-			email: email,
+			email: username,
 		},
 	})
 
@@ -47,7 +50,7 @@ function login({ email, password }) {
 		}
 	}
 
-	jwt.sign({ email }, process.env.MY_SECRET, null, (err, token) => {
+	jwt.sign({ username }, process.env.MY_SECRET, null, (err, token) => {
 		if (err) {
 			return {
 				status: false,
@@ -64,7 +67,7 @@ function login({ email, password }) {
 }
 
 // Create User
-router.post('/', async (req, res) => {
+router.post('/signup', async (req, res) => {
 	const { email, password, name } = req.body
 
 	if (!email || !password) {
@@ -123,4 +126,75 @@ router.post('/', async (req, res) => {
 	}
 })
 
+router.get('/verify', async (req, res) => {
+	/**
+	 * Return type:
+	 *
+	 * {
+	 * 		success: boolean,
+	 * 		message: string,
+	 * 		user? : {
+	 * 			username: string,
+	 * 		}
+	 * }
+	 */
+
+	const token = getTokenFromHeader(req)
+	if (!token) {
+		return res.status(401).json({
+			success: false,
+			message: 'Unauthorized',
+		})
+	}
+
+	try {
+		const decodedToken = jwt.verify(token, process.env.MY_SECRET)
+		if (!decodedToken) {
+			console.log('Token is expired or invalid')
+			return res.status(403).json({
+				success: false,
+				message: 'Invalid token',
+			})
+		}
+
+		return res.json({
+			success: true,
+			message: 'Verified successfully',
+			user: decodedToken,
+		})
+	} catch (err) {
+		if (err instanceof jwt.TokenExpiredError) {
+			return res.status(403).json({
+				success: false,
+				message: 'Token expired',
+			})
+		} else if (err instanceof jwt.JsonWebTokenError) {
+			return res.status(403).json({
+				success: false,
+				message: 'Invalid token',
+			})
+		} else {
+			return res.status(500).json({
+				success: false,
+				message: 'Internal server error',
+			})
+		}
+	}
+})
+
+function getTokenFromHeader(req) {
+	let header = req?.headers?.authorization.split('Bearer ')[1]
+
+	try {
+		const tokenParts = header.split('=')
+		if (tokenParts.length !== 2 || tokenParts[0] !== 'token') {
+			console.log('Cookie format is invalid')
+			console.log('Token parts: ', tokenParts)
+			throw new Error('Invalid token format')
+		}
+		return tokenParts[1]
+	} catch (error) {
+		return null
+	}
+}
 export default router
