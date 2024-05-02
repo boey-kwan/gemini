@@ -83,6 +83,7 @@ export default function Task(props) {
                                 From
                                 <TextField type="time"
                                     value={props.value.fromTime} 
+                                    size="small"
                                     onChange={(x) => { 
                                         if (x) setStartTime(x) 
                                         props.updateTaskList(props.id, "fromTime", x.target.value)
@@ -91,6 +92,7 @@ export default function Task(props) {
                                 to
                                 <TextField type="time"
                                     value={props.value.toTime} 
+                                    size="small"
                                     onChange={(x) => { 
                                         if (x) setStartTime(x) 
                                         props.updateTaskList(props.id, "toTime", x.target.value)
