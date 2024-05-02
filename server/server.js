@@ -1,229 +1,237 @@
-import express from "express";
-import cors from "cors";
+import express from 'express'
+import cors from 'cors'
 import {
 	GoogleGenerativeAI,
 	HarmCategory,
 	HarmBlockThreshold,
-} from "@google/generative-ai";
-import dotenv from "dotenv";
+} from '@google/generative-ai'
+import dotenv from 'dotenv'
 
-dotenv.config();
-import usersRouter from "./routes/users.js";
+dotenv.config()
 
-const PORT = process.env.PORT || 5050;
-const app = express();
+import usersRouter from './routes/users/index.js'
+import authRouter from './routes/auth/auth.js'
+import { isAuthenticated } from './middleware/auth.js'
 
-const MODEL_NAME = "gemini-1.5-pro-latest";
-const API_KEY = process.env.G_KEY;
+const PORT = process.env.PORT || 5050
+const app = express()
 
-app.use(cors());
-app.use(express.json());
+app.use(cors())
+app.use(express.json())
 
-// app.use("/users", usersRouter);
+// public routes
+app.use('/auth', authRouter)
+
+// private routes protected by isAuthenticated middleware
+app.use(isAuthenticated)
+app.use('/users', usersRouter)
+
+const MODEL_NAME = 'gemini-1.5-pro-latest'
+const API_KEY = process.env.G_KEY
 
 function generateLastWeekTimestamp() {
-	const oneWeekMs = 7 * 24 * 60 * 60 * 1000;
-	return Date.now() - Math.floor(Math.random() * oneWeekMs);
+	const oneWeekMs = 7 * 24 * 60 * 60 * 1000
+	return Date.now() - Math.floor(Math.random() * oneWeekMs)
 }
 
 function generateDuration() {
-	const maxTaskDuration = 60 * 60 * 1000; // 3 hours
-	return Math.floor(Math.random() * maxTaskDuration);
+	const maxTaskDuration = 60 * 60 * 1000 // 3 hours
+	return Math.floor(Math.random() * maxTaskDuration)
 }
 
 // define example tasks
 const taskList = [
 	{
-		title: "Fed the fish",
-		description: "I fed the fish and they ate the food. They seemed happy.",
+		title: 'Fed the fish',
+		description: 'I fed the fish and they ate the food. They seemed happy.',
 		startTime: generateLastWeekTimestamp(),
 		endTime: 0,
-		location: "Sitting room",
-		photoIDs: ["photo_1", "photo_2"],
+		location: 'Sitting room',
+		photoIDs: ['photo_1', 'photo_2'],
 	},
 	{
-		title: "Folded the clothes",
+		title: 'Folded the clothes',
 		description:
-			"The clothes were in a hamper at the foot of the bed. I folded them and put them away in the closet.",
+			'The clothes were in a hamper at the foot of the bed. I folded them and put them away in the closet.',
 		startTime: generateLastWeekTimestamp(),
 		endTime: 0,
-		location: "Bedroom",
+		location: 'Bedroom',
 		photoIDs: [],
 	},
 	{
-		title: "Watered the plants",
+		title: 'Watered the plants',
 		description:
-			"I made sure to water each plant according to its needs. The succulents got a little less water than the ferns.",
+			'I made sure to water each plant according to its needs. The succulents got a little less water than the ferns.',
 		startTime: generateLastWeekTimestamp(),
 		endTime: 0,
-		location: "Balcony",
-		photoIDs: ["photo_3", "photo_4"],
+		location: 'Balcony',
+		photoIDs: ['photo_3', 'photo_4'],
 	},
 	{
-		title: "Practiced playing the guitar",
+		title: 'Practiced playing the guitar',
 		description:
-			"I worked on a new song and practiced some scales to improve my technique.",
+			'I worked on a new song and practiced some scales to improve my technique.',
 		startTime: generateLastWeekTimestamp(),
 		endTime: 0,
-		location: "Living room",
-		photoIDs: ["photo_5"],
+		location: 'Living room',
+		photoIDs: ['photo_5'],
 	},
 	{
-		title: "Went for a jog",
+		title: 'Went for a jog',
 		description:
-			"I enjoyed the fresh air and the feeling of my feet hitting the pavement. It was a good workout.",
+			'I enjoyed the fresh air and the feeling of my feet hitting the pavement. It was a good workout.',
 		startTime: generateLastWeekTimestamp(),
 		endTime: 0,
-		location: "Park",
+		location: 'Park',
 		photoIDs: [],
 	},
 	{
-		title: "Prepared dinner",
+		title: 'Prepared dinner',
 		description:
-			"I cooked a delicious meal and set the table for a cozy dinner at home. The food was tasty and filling.",
+			'I cooked a delicious meal and set the table for a cozy dinner at home. The food was tasty and filling.',
 		startTime: generateLastWeekTimestamp(),
 		endTime: 0,
-		location: "Kitchen",
+		location: 'Kitchen',
 		photoIDs: [],
 	},
 	{
-		title: "Read a book",
+		title: 'Read a book',
 		description:
-			"I got lost in the pages of a novel and escaped into a different world. It was a great way to relax and unwind.",
+			'I got lost in the pages of a novel and escaped into a different world. It was a great way to relax and unwind.',
 		startTime: generateLastWeekTimestamp(),
 		endTime: 0,
-		location: "Reading nook",
-		photoIDs: ["photo_6"],
+		location: 'Reading nook',
+		photoIDs: ['photo_6'],
 	},
 	{
-		title: "Wrote code",
+		title: 'Wrote code',
 		description:
-			"I worked on a personal project and made progress on a new feature.",
+			'I worked on a personal project and made progress on a new feature.',
 		startTime: generateLastWeekTimestamp(),
 		endTime: 0,
-		location: "Home office",
+		location: 'Home office',
 		photoIDs: [],
 	},
 	{
-		title: "Called a friend",
+		title: 'Called a friend',
 		description:
-			"I called a friend to catch up and chat about life. It was nice to hear their voice and share stories.",
+			'I called a friend to catch up and chat about life. It was nice to hear their voice and share stories.',
 		startTime: generateLastWeekTimestamp(),
 		endTime: 0,
-		location: "Anywhere",
+		location: 'Anywhere',
 		photoIDs: [],
 	},
 	{
-		title: "Took a nap",
+		title: 'Took a nap',
 		description:
-			"I recharged my energy with a short nap and woke up feeling refreshed and ready to tackle the day.",
+			'I recharged my energy with a short nap and woke up feeling refreshed and ready to tackle the day.',
 		startTime: generateLastWeekTimestamp(),
 		endTime: 0,
-		location: "Bedroom",
+		location: 'Bedroom',
 		photoIDs: [],
 	},
 	{
-		title: "Attended a yoga class",
+		title: 'Attended a yoga class',
 		description:
-			"I stretched and strengthened my body in a yoga class. It was a great way to relax and unwind.",
+			'I stretched and strengthened my body in a yoga class. It was a great way to relax and unwind.',
 		startTime: generateLastWeekTimestamp(),
 		endTime: 0,
-		location: "Yoga studio",
+		location: 'Yoga studio',
 		photoIDs: [],
 	},
 	{
-		title: "Watched a movie",
+		title: 'Watched a movie',
 		description:
-			"We watched a movie together and enjoyed popcorn and snacks. It was a fun and relaxing evening at home.",
+			'We watched a movie together and enjoyed popcorn and snacks. It was a fun and relaxing evening at home.',
 		startTime: generateLastWeekTimestamp(),
 		endTime: 0,
-		location: "Living room",
+		location: 'Living room',
 		photoIDs: [],
 	},
 	{
-		title: "Went grocery shopping",
+		title: 'Went grocery shopping',
 		description:
-			"I made a list and stocked up on essentials for the week ahead. The fridge is now full of fresh produce and snacks.",
+			'I made a list and stocked up on essentials for the week ahead. The fridge is now full of fresh produce and snacks.',
 		startTime: generateLastWeekTimestamp(),
 		endTime: 0,
-		location: "Supermarket",
+		location: 'Supermarket',
 		photoIDs: [],
 	},
 	{
-		title: "Practiced meditation",
+		title: 'Practiced meditation',
 		description:
-			"I sat in silence and focused on my breath to calm my mind and find inner peace. It was a grounding experience.",
+			'I sat in silence and focused on my breath to calm my mind and find inner peace. It was a grounding experience.',
 		startTime: generateLastWeekTimestamp(),
 		endTime: 0,
-		location: "Quiet room",
+		location: 'Quiet room',
 		photoIDs: [],
 	},
 	{
-		title: "Planned my next vacation",
+		title: 'Planned my next vacation',
 		description:
-			"I researched destinations and activities for an upcoming trip. It was exciting to dream about new adventures.",
+			'I researched destinations and activities for an upcoming trip. It was exciting to dream about new adventures.',
 		startTime: generateLastWeekTimestamp(),
 		endTime: 0,
-		location: "Home office",
+		location: 'Home office',
 		photoIDs: [],
 	},
 	{
-		title: "Cleaned the house",
+		title: 'Cleaned the house',
 		description:
-			"I decluttered and tidied up the living spaces to create a clean and organized environment. I like the feeling of a clean house.",
+			'I decluttered and tidied up the living spaces to create a clean and organized environment. I like the feeling of a clean house.',
 		startTime: generateLastWeekTimestamp(),
 		endTime: 0,
-		location: "Everywhere",
+		location: 'Everywhere',
 		photoIDs: [],
 	},
 	{
-		title: "Practiced a new language",
+		title: 'Practiced a new language',
 		description:
-			"I practiced vocabulary and grammar exercises to improve my language skills. It was challenging but rewarding.",
+			'I practiced vocabulary and grammar exercises to improve my language skills. It was challenging but rewarding.',
 		startTime: generateLastWeekTimestamp(),
 		endTime: 0,
-		location: "Study room",
+		location: 'Study room',
 		photoIDs: [],
 	},
 	{
-		title: "Volunteered at a local charity",
+		title: 'Volunteered at a local charity',
 		description:
-			"I helped out at a charity event and made a positive impact in the community. It felt good to give back.",
+			'I helped out at a charity event and made a positive impact in the community. It felt good to give back.',
 		startTime: generateLastWeekTimestamp(),
 		endTime: 0,
-		location: "Charity center",
+		location: 'Charity center',
 		photoIDs: [],
 	},
 	{
-		title: "Hosted a game night",
+		title: 'Hosted a game night',
 		description:
-			"I invited friends over for a game night and we played board games and card games. It was a fun and social evening.",
+			'I invited friends over for a game night and we played board games and card games. It was a fun and social evening.',
 		startTime: generateLastWeekTimestamp(),
 		endTime: 0,
-		location: "Living room",
+		location: 'Living room',
 		photoIDs: [],
 	},
 	{
-		title: "Explored a new hiking trail",
+		title: 'Explored a new hiking trail',
 		description:
-			"I hiked through the forest and enjoyed the fresh air and beautiful scenery. It was a great way to connect with nature.",
+			'I hiked through the forest and enjoyed the fresh air and beautiful scenery. It was a great way to connect with nature.',
 		startTime: generateLastWeekTimestamp(),
 		endTime: 0,
-		location: "Nature reserve",
+		location: 'Nature reserve',
 		photoIDs: [],
 	},
-];
+]
 
 async function runChat() {
-	const genAI = new GoogleGenerativeAI(API_KEY);
-	const model = genAI.getGenerativeModel({ model: MODEL_NAME });
+	const genAI = new GoogleGenerativeAI(API_KEY)
+	const model = genAI.getGenerativeModel({ model: MODEL_NAME })
 
 	const generationConfig = {
 		temperature: 1,
 		topK: 0,
 		topP: 0.95,
 		maxOutputTokens: 8192,
-	};
+	}
 	// const generationConfig = {
 	//   temperature: 1,
 	//   topK: 0,
@@ -248,7 +256,7 @@ async function runChat() {
 			category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
 			threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
 		},
-	];
+	]
 	// const safetySettings = [
 	//   {
 	//     category: HarmCategory.HARM_CATEGORY_HARASSMENT,
@@ -272,13 +280,13 @@ async function runChat() {
 		generationConfig,
 		safetySettings,
 		history: [],
-	});
+	})
 
 	const result = await chat.sendMessage(
-		"Tell me about Pokemon in under 100 words"
-	);
-	const response = result.response;
-	console.log(response.text());
+		'Tell me about Pokemon in under 100 words'
+	)
+	const response = result.response
+	console.log(response.text())
 	// const chat = model.startChat({
 	//   generationConfig,
 	//   safetySettings,
@@ -287,7 +295,7 @@ async function runChat() {
 	// });
 
 	let prompt =
-		"Help me summarize my accomplishments. I will provide you with instructions, so read them carefully.\n\nThe significance of a task depends upon effort required and overall impact to myself and others. Using this framework, label every task according to its significance, assigning a numerical ranking from 1 (highest significance) to 3 (lowest significance). Arrange the tasks in order and show me how you labeled them before continuing.\n\nNext, while focusing on the most significant tasks available, determine 3-5 categories to which tasks can belong.\n\nGenerate summaries of my accomplishments in each of these categories and address me directly in the second person when doing so.";
+		'Help me summarize my accomplishments. I will provide you with instructions, so read them carefully.\n\nThe significance of a task depends upon effort required and overall impact to myself and others. Using this framework, label every task according to its significance, assigning a numerical ranking from 1 (highest significance) to 3 (lowest significance). Arrange the tasks in order and show me how you labeled them before continuing.\n\nNext, while focusing on the most significant tasks available, determine 3-5 categories to which tasks can belong.\n\nGenerate summaries of my accomplishments in each of these categories and address me directly in the second person when doing so.'
 
 	taskList.forEach((task) => {
 		prompt += `\n\nTask: ${task.title}\nDescription: ${
@@ -298,18 +306,18 @@ async function runChat() {
 			task.endTime
 		).toLocaleString()}\nLocation: ${
 			task.location
-		}\nPhoto IDs: ${task.photoIDs.join(", ")}`;
-	});
+		}\nPhoto IDs: ${task.photoIDs.join(', ')}`
+	})
 
-	const res = await model.generateContent(prompt);
+	const res = await model.generateContent(prompt)
 	// const result = await chat.sendMessage("Tell me about Pokemon in under 100 words");
 
-	console.log(res.response.text());
+	console.log(res.response.text())
 }
 
-runChat();
+runChat()
 
 // start the Express server
 app.listen(PORT, () => {
-	console.log(`Server listening on port ${PORT}`);
-});
+	console.log(`Server listening on port ${PORT}`)
+})

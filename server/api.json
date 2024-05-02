@@ -1,0 +1,36 @@
+{
+	"createUser or signup": {
+		"url": "/users",
+		"method": "POST",
+		"body": {
+			"email": "string",
+			"password": "string",
+			"name": "string"
+		},
+		"response": [
+			{
+				"status": false,
+				"message": "Missing required fields"
+			},
+			{
+				"status": true,
+				"message": "User created successfully"
+			}
+		]
+	},
+	"edit user": {
+		"url": "/users/:userId",
+		"method": "PATCH",
+		"body": {
+			"email": "string",
+			"password": "string",
+			"name": "string"
+		},
+		"response": [
+			{
+				"status": false,
+				"message": "Missing required fields"
+			}
+		]
+	}
+}

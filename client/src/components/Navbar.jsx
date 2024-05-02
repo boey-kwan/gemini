@@ -1,30 +1,30 @@
-import { NavLink } from "react-router-dom";
-import "../App.css";
-import FavoriteIcon from "@mui/icons-material/Favorite";
+import { NavLink } from 'react-router-dom'
+import '../App.css'
+import FavoriteIcon from '@mui/icons-material/Favorite'
 
 export default function Navbar(props) {
-	const date = new Date();
-	const dateString = date.toDateString();
+	const date = new Date()
+	const dateString = date.toDateString()
 
 	return (
 		<nav>
-			<div className="navbar" style={{ justifyContent: "space-between" }}>
-				<NavLink to="/" style={{ padding: "2em" }}>
+			<div className="navbar" style={{ justifyContent: 'space-between' }}>
+				<NavLink to="/" style={{ padding: '2em' }}>
 					<FavoriteIcon />
 				</NavLink>
-				<div style={{ display: "flex", columnGap: "1em" }}>
+				<div style={{ display: 'flex', columnGap: '1em' }}>
 					<NavLink
 						to={
 							props.loggedIn
-								? "/date/" + dateString + "/${username}"
-								: "/login"
+								? '/date/' + dateString + '/${username}'
+								: '/login'
 						}
 						className="navbutton"
 					>
 						Today
 					</NavLink>
 					<NavLink
-						to={props.loggedIn ? "/memories" : "/login"}
+						to={props.loggedIn ? '/memories' : '/login'}
 						className="navbutton"
 					>
 						Memories
@@ -45,7 +45,7 @@ export default function Navbar(props) {
 				</div>
 			</div>
 		</nav>
-	);
+	)
 }
 
 {
