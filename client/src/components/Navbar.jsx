@@ -1,10 +1,37 @@
 import { NavLink } from 'react-router-dom'
 import '../App.css'
 import FavoriteIcon from '@mui/icons-material/Favorite'
+import { useAuth } from '../context/index'
 
-export default function Navbar(props) {
-	const date = new Date()
-	const dateString = date.toDateString()
+export default function Navbar() {
+	const { isLoggedIn, signout } = useAuth()
+
+	if (!isLoggedIn) {
+		return (
+			<nav>
+				<div
+					className="navbar"
+					style={{ justifyContent: 'space-between' }}
+				>
+					<NavLink to="/" style={{ padding: '2em' }}>
+						<FavoriteIcon />
+					</NavLink>
+					<div
+						style={{
+							display: 'flex',
+							gap: '1em',
+							justifyContent: 'center',
+							alignItems: 'center',
+						}}
+					>
+						<NavLink to="/login" className="navbutton loginbutton">
+							Log In
+						</NavLink>
+					</div>
+				</div>
+			</nav>
+		)
+	}
 
 	return (
 		<nav>
@@ -14,34 +41,21 @@ export default function Navbar(props) {
 				</NavLink>
 				<div style={{ display: 'flex', columnGap: '1em' }}>
 					<NavLink
-						to={
-							props.loggedIn
-								? '/date/' + dateString + '/${username}'
-								: '/login'
-						}
+						to={`/date/${new Date.toString()}`}
 						className="navbutton"
 					>
 						Today
 					</NavLink>
-					<NavLink
-						to={props.loggedIn ? '/memories' : '/login'}
-						className="navbutton"
-					>
+					<NavLink to={'/memories'} className="navbutton">
 						Memories
 					</NavLink>
-					{props.loggedIn ? (
-						<NavLink
-							to="/login"
-							className="navbutton loginbutton"
-							onClick={() => props.setLoggedIn(false)}
-						>
-							Log out
-						</NavLink>
-					) : (
-						<NavLink to="/login" className="navbutton loginbutton">
-							Log in
-						</NavLink>
-					)}
+					<NavLink
+						to="/"
+						className="navbutton loginbutton"
+						onClick={signout}
+					>
+						Log out
+					</NavLink>
 				</div>
 			</div>
 		</nav>

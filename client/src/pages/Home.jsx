@@ -1,17 +1,8 @@
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import '../App.css'
 
 export default function Home() {
 	const navigate = useNavigate()
-
-	// Determine the user and the date
-	const location = useLocation()
-	let username = ''
-	if (location.pathname.split('/').length > 2) {
-		username = location.pathname.split('/')[2]
-	}
-	const date = new Date()
-	const dateString = date.toDateString()
 
 	return (
 		<div
@@ -25,8 +16,10 @@ export default function Home() {
 			<h1
 				className="h1"
 				style={{
+					marginTop: '3em',
 					fontSize: '3em',
 					fontWeight: 'bold',
+					letterSpacing: '0',
 				}}
 			>
 				Welcome to Gemini Task Manager!
@@ -45,7 +38,7 @@ export default function Home() {
 						minWidth: '15em',
 					}}
 					onClick={() => {
-						navigate('/date/' + dateString + '/' + username)
+						navigate('/today')
 					}}
 				>
 					Jump to today's tasks!

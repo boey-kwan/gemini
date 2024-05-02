@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useLocation, Link } from 'react-router-dom'
 import '../App.css'
-import Task from './Task'
+import Task from '../components/Task'
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined'
 
 // Date is in the form "new Date()"

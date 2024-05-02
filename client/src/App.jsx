@@ -1,34 +1,31 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
-import Home from './components/Home'
-import Today from './components/Today'
-import Memories from './components/Memories'
-import Login from './components/Login'
+import Home from './pages/Home'
+import Today from './pages/Today'
+import Memories from './pages/Memories'
+import Login from './pages/Login'
+import AuthProvider from './context/authProvider.jsx'
+import RequireAuth from './components/RequireAuth'
+
 import './App.css'
 
-import { useState } from 'react'
-
 const App = () => {
-	const [loggedIn, setLoggedIn] = useState(false)
-
 	return (
-		<div>
-			<BrowserRouter>
-				<Navbar loggedIn={loggedIn} />
+		<BrowserRouter>
+			<AuthProvider>
+				<Navbar />
 				<div className="body">
 					<Routes>
 						<Route path="/" element={<Home />} />
-						<Route path="/home/*" element={<Home />} />
-						<Route path="/date/*" element={<Today />} />
-						<Route path="/memories" element={<Memories />} />
-						<Route
-							path="/login"
-							element={<Login setLoggedIn={setLoggedIn} />}
-						/>
+						<Route path="/login" element={<Login />} />
+						<Route element={<RequireAuth />}>
+							<Route path="/today" element={<Today />} />
+							<Route path="/memories" element={<Memories />} />
+						</Route>
 					</Routes>
 				</div>
-			</BrowserRouter>
-		</div>
+			</AuthProvider>
+		</BrowserRouter>
 	)
 }
 export default App
