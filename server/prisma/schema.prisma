@@ -22,13 +22,13 @@ model User {
     password String
     name     String?
     days     Day[]
-    tasks    Task[]
 }
 
 model Day {
-    date   DateTime @id
-    tasks  Task[]   @relation("DayTasks")
-    user   User     @relation(fields: [userId], references: [id])
+    date  DateTime @id
+    tasks Task[]   @relation("DayTasks")
+
+    user   User @relation(fields: [userId], references: [id])
     userId Int
 }
 
@@ -39,8 +39,6 @@ model Task {
     time        String?
     location    String?
     completed   Boolean @default(false)
-    photos      String
+    photo       String
     days        Day[]   @relation("DayTasks")
-    user        User    @relation(fields: [userId], references: [id])
-    userId      Int
 }

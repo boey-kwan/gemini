@@ -72,13 +72,13 @@ export default function AuthProvider({ children }) {
 			const data = await res.json()
 
 			if (data?.success) {
-				setUser({ ...data.user })
+				setUser({ username })
 				setIsLoggedIn(true)
 				setTokenInStorage(data.token)
 
 				return {
 					success: true,
-					message: 'Login successful', //if success send to profilecontext
+					message: 'Login successful',
 				}
 			} else {
 				return {
@@ -108,7 +108,7 @@ export default function AuthProvider({ children }) {
 			const data = await res.json()
 
 			if (data.success) {
-				setUser({ ...data.user })
+				setUser({ username })
 				setIsLoggedIn(true)
 				setTokenInStorage(data.token)
 

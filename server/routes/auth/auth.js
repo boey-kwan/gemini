@@ -1,7 +1,7 @@
 import express from 'express'
 import jwt from 'jsonwebtoken'
 import env from 'dotenv'
-
+import { prisma } from '../../db/prismaClient.js'
 env.config()
 
 const router = express.Router()
@@ -13,12 +13,13 @@ router.post('/login', async (req, res) => {
 	console.log('result', result)
 	if (result.status) {
 		res.status(200).json({
-			status: true,
+			success: true,
 			message: 'Success',
+			token: result.token,
 		})
 	} else {
 		res.status(401).json({
-			status: false,
+			success: false,
 			message: result.message,
 		})
 	}
@@ -26,10 +27,10 @@ router.post('/login', async (req, res) => {
 
 async function login({ username, password }) {
 	if (!username || !password) {
-		return res.status(400).json({
+		return {
 			status: false,
 			message: 'Missing required fields',
-		})
+		}
 	}
 
 	const user = await prisma.user.findUnique({
@@ -38,8 +39,6 @@ async function login({ username, password }) {
 		},
 	})
 
-	console.log('user', user)
-
 	if (!user) {
 		return {
 			status: false,
@@ -47,8 +46,6 @@ async function login({ username, password }) {
 		}
 	}
 
-	console.log('user.password', user.password)
-	console.log('password', password)
 	if (user.password !== password) {
 		return {
 			status: false,
