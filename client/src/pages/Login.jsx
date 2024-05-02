@@ -75,6 +75,9 @@ export default function Login() {
 			<form
 				onSubmit={handleLogin}
 				className="column login shadowed-card strong-shadow"
+				style={{
+					minWidth: 'fit-content',
+				}}
 			>
 				<h1 className="h1">Log in</h1>
 				<br />
@@ -115,6 +118,9 @@ export default function Login() {
 			<form
 				onSubmit={handleSignup}
 				className="column login shadowed-card strong-shadow"
+				style={{
+					minWidth: 'fit-content',
+				}}
 			>
 				<h1 className="h1">Create New User</h1>
 				<br />

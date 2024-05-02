@@ -1,7 +1,4 @@
 {
-	"dependencies": {
-		"@google/generative-ai": "^0.9.0"
-	},
 	"prettier": {
 		"trailingComma": "es5",
 		"tabWidth": 4,

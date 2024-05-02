@@ -6,9 +6,11 @@ env.config()
 
 const router = express.Router()
 
-router.post('/login', (req, res) => {
+router.post('/login', async (req, res) => {
 	const { username, password } = req.body
-	const result = login({ username, password })
+	const result = await login({ username, password })
+
+	console.log('result', result)
 	if (result.status) {
 		res.status(200).json({
 			status: true,
@@ -17,12 +19,12 @@ router.post('/login', (req, res) => {
 	} else {
 		res.status(401).json({
 			status: false,
-			message: 'Invalid credentials',
+			message: result.message,
 		})
 	}
 })
 
-function login({ username, password }) {
+async function login({ username, password }) {
 	if (!username || !password) {
 		return res.status(400).json({
 			status: false,
@@ -30,11 +32,13 @@ function login({ username, password }) {
 		})
 	}
 
-	const user = prisma.user.findUnique({
+	const user = await prisma.user.findUnique({
 		where: {
 			email: username,
 		},
 	})
+
+	console.log('user', user)
 
 	if (!user) {
 		return {
@@ -43,6 +47,8 @@ function login({ username, password }) {
 		}
 	}
 
+	console.log('user.password', user.password)
+	console.log('password', password)
 	if (user.password !== password) {
 		return {
 			status: false,
@@ -50,20 +56,20 @@ function login({ username, password }) {
 		}
 	}
 
-	jwt.sign({ username }, process.env.MY_SECRET, null, (err, token) => {
-		if (err) {
-			return {
-				status: false,
-				message: 'Failed to generate token\n' + err,
-			}
-		}
+	try {
+		const token = jwt.sign({ username }, process.env.MY_SECRET)
 
 		return {
 			status: true,
 			message: 'Success',
 			token: token,
 		}
-	})
+	} catch (err) {
+		return {
+			status: false,
+			message: 'Failed to generate token\n',
+		}
+	}
 }
 
 // Create User
