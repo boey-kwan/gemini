@@ -1,11 +1,11 @@
 import express from 'express'
 import cors from 'cors'
-import {
-	GoogleGenerativeAI,
-	HarmCategory,
-	HarmBlockThreshold,
-} from '@google/generative-ai'
 import dotenv from 'dotenv'
+
+import daysRouter from './routes/users/days/days.js'
+import tasksRouter from './routes/users/tasks/tasks.js'
+import memoriesRouter from './routes/users/memories/memories.js'
+import photosRouter from './routes/users/photos/photos.js'
 
 dotenv.config()
 
@@ -35,6 +35,10 @@ app.use('/auth', authRouter)
 // private routes protected by isAuthenticated middleware
 app.use(isAuthenticated)
 app.use('/users', usersRouter)
+app.use('/days', daysRouter)
+app.use('/tasks', tasksRouter)
+app.use('/memories', memoriesRouter)
+app.use('/photos', photosRouter)
 
 // start the Express server
 app.listen(PORT, () => {

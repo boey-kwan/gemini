@@ -1,3 +1,5 @@
+import jwt from 'jsonwebtoken'
+
 const isAuthenticated = (req, res, next) => {
 	const token = getTokenFromHeader(req)
 
@@ -16,9 +18,11 @@ const isAuthenticated = (req, res, next) => {
 			})
 		}
 
-		req.userEmail = decoded
-		next()
+		res.locals.user = decoded
+		console.log(res.locals.user)
 	})
+
+	next()
 }
 
 function getTokenFromHeader(req) {

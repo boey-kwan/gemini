@@ -5,6 +5,18 @@ import { prisma } from '../../../db/prismaClient.js'
 const router = express.Router()
 
 router.get('/memories', isAuthenticated, async (req, res) => {
+	// period=day, week, month
+
+	// get Data
+	/**
+	 * prisma.tasks.findMany({....})
+	 */
+
+	// sum up the tasks ...
+	// send to gemini
+
+	// get response from gemini
+
 	const { userID, listOfDates } = req.query
 
 	if (!userID || !listOfDates) {

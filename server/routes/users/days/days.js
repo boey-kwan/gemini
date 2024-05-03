@@ -5,22 +5,10 @@ import { prisma } from '../../../db/prismaClient.js'
 const router = express.Router()
 
 // create a new day
-router.post('/days', isAuthenticated, async (req, res) => {
+router.post('/days', async (req, res) => {
 	const { userId, date } = req.body
 
 	try {
-		// valid user?
-		const userExists = await prisma.user.findUnique({
-			where: { id: userId },
-		})
-
-		if (!userExists) {
-			return res.status(404).json({
-				status: false,
-				message: 'User not found',
-			})
-		}
-
 		// day already exists?
 		const dayExists = await prisma.day.findFirst({
 			where: {
@@ -57,7 +45,9 @@ router.post('/days', isAuthenticated, async (req, res) => {
 })
 
 // get a day
-router.get('/days', isAuthenticated, async (req, res) => {
+router.get('/days', async (req, res) => {
+	console.log('in /days')
+	console.log('res.locals.user', res.locals.user)
 	const { userId, date } = req.query
 
 	try {

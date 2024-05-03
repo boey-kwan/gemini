@@ -40,10 +40,7 @@ export default function Navbar() {
 					<FavoriteIcon />
 				</NavLink>
 				<div style={{ display: 'flex', columnGap: '1em' }}>
-					<NavLink
-						to={`/date/${new Date.toString()}`}
-						className="navbutton"
-					>
+					<NavLink to={`/today`} className="navbutton">
 						Today
 					</NavLink>
 					<NavLink to={'/memories'} className="navbutton">

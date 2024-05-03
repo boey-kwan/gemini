@@ -11,6 +11,7 @@ var initialState = {
 	login: async () => {},
 	signup: async () => {},
 	signout: () => {},
+	getTokenFromStorage: () => {},
 }
 
 export const AuthContext = createContext(initialState)
@@ -158,6 +159,7 @@ export default function AuthProvider({ children }) {
 				login,
 				signup,
 				signout,
+				getTokenFromStorage,
 			}}
 		>
 			{children}

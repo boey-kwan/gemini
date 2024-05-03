@@ -25,11 +25,14 @@ model User {
 }
 
 model Day {
-    date  DateTime @id
+    id    Int      @id @default(autoincrement())
+    date  DateTime
     tasks Task[]   @relation("DayTasks")
 
     user   User @relation(fields: [userId], references: [id])
     userId Int
+
+    @@unique([date, userId])
 }
 
 model Task {

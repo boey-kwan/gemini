@@ -4,6 +4,8 @@ import '../App.css'
 import Task from '../components/Task'
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined'
 
+import { useData } from '../context/index'
+
 // Date is in the form "new Date()"
 function getDateString(date) {
 	const dayOfWeek = dateString.getDay()
@@ -146,219 +148,236 @@ function updateField(id, fieldName, value) {
 	}
 }
 
+// export default function Today() {
+// 	// Determine the user and the date
+// 	const location = useLocation()
+
+// 	// Determine previous and next dates
+// 	const yesterday = new Date(date.valueOf() - 1000 * 60 * 60 * 24 * 1)
+// 	const yesterdayString = yesterday.toDateString()
+// 	const tomorrow = new Date(date.valueOf() + 1000 * 60 * 60 * 24 * 1)
+// 	const tomorrowString = tomorrow.toDateString()
+
+// 	// Determine real today's date
+// 	const today = new Date()
+// 	const todayString = today.toDateString()
+
+// 	let data = null
+// 	// getData({username:"username", date:"date"}).then(x =>
+// 	// 	{data = x.data;
+// 	// 	console.log(data);}
+// 	// )
+
+// 	// TODO: Grab all tasks in this day.
+// 	const [taskList, setTaskList] = useState(
+// 		getData({ username: 'username', date: 'date' }).data
+// 	)
+
+// 	// console.log("A", getData({username:"username", date:"date"}))
+// 	// console.log("B", getData({username:"username", date:"date"}).data)
+// 	// console.log("data", data)
+// 	// console.log("as list", Object.assign([], {...taskList}))
+
+// 	function updateTaskList(id, fieldName, value) {
+// 		// console.log("ID", id)
+// 		// console.log("fieldName", fieldName)
+// 		// console.log("value", value)
+// 		const task = taskList[id]
+// 		switch (fieldName) {
+// 			case 'title':
+// 				task.title = value
+// 				// console.log("Updated to: ", task.title);
+// 				break
+// 			case 'fromTime':
+// 				task.fromTime = value
+// 				break
+// 			case 'toTime':
+// 				task.toTime = value
+// 				break
+// 			case 'location':
+// 				task.location = value
+// 				break
+// 			case 'description':
+// 				task.description = value
+// 				break
+// 			case 'imgUrl':
+// 				task.imgUrl = value
+// 				break
+// 		}
+// 		setTaskList({ id: task, ...taskList })
+// 	}
+
+// 	function deleteTask(id) {
+// 		const copy = { ...taskList }
+// 		delete copy[id]
+// 		setTaskList({ ...copy })
+// 		postData({ username: 'username', date: 'date', data: copy })
+// 	}
+
+// 	// TODO: Initialize to the first ID in the list.
+// 	const [currentTaskId, setCurrentTaskId] = useState(1)
+
+// 	function updateCurrentTaskId(id) {
+// 		setCurrentTaskId(id)
+// 		// console.log("current task: " + id);
+// 	}
+
+// 	useEffect(() => {
+// 		async function fetchData() {
+// 			// const response = await getData({ username, date: dateString });
+// 			const response = getData({ username, date: dateString })
+
+// 			setTaskList(response.data)
+
+// 			// console.log(response.data);
+// 		}
+// 		fetchData()
+// 	}, [])
+
+// 	return (
+// 		<div>
+// 			<div className="row">
+// 				<div className="body-left">
+// 					<button className="day-navigation">
+// 						<Link to={`/date/${yesterdayString}/${username}`}>
+// 							{'< ' + yesterdayString}{' '}
+// 						</Link>
+// 					</button>
+// 				</div>
+
+// 				<div className="body-center scroll">
+// 					{dateString == todayString ? (
+// 						<h1 className="h1">Today's To-Do List</h1>
+// 					) : (
+// 						<h1 className="h1">To-Do List</h1>
+// 					)}
+// 					<h2 className="h2">{dateString}</h2>
+// 					<div className="task-list">
+// 						{Object.keys(taskList).length ? (
+// 							Object.assign([], { ...taskList }).map((value) => {
+// 								// console.log("value", value);
+
+// 								return (
+// 									<Task
+// 										key={value.taskId}
+// 										id={value.taskId}
+// 										value={value}
+// 										showSidebar={
+// 											currentTaskId == value.taskId
+// 										}
+// 										onClick={updateCurrentTaskId}
+// 										deleteTask={deleteTask}
+// 										updateTaskList={updateTaskList}
+// 									/>
+// 								)
+// 							})
+// 						) : (
+// 							<h2
+// 								style={{
+// 									fontStyle: 'italic',
+// 									opacity: 0.5,
+// 									textAlign: 'center',
+// 								}}
+// 							>
+// 								Create a task to get started!
+// 							</h2>
+// 						)}
+// 					</div>
+
+// 					{/* Add a task button */}
+// 					<div
+// 						style={{
+// 							display: 'flex',
+// 							justifyContent: 'center',
+// 						}}
+// 					>
+// 						<button
+// 							className="row main-button"
+// 							style={{
+// 								width: 'fit-content',
+// 							}}
+// 							onClick={() => {
+// 								let copy = { ...taskList }
+// 								// console.log("taskList length", );
+// 								const taskId = Object.keys(taskList).length + 1
+// 								copy[taskId] = {
+// 									taskId: taskId,
+// 									title: '',
+// 									fromTime: '',
+// 									toTime: '',
+// 									location: '',
+// 									description: '',
+// 									imgUrl: '',
+// 								}
+// 								// const list = Object.assign([], {...taskList})
+// 								// console.log("taskList AAAAA", copy);
+// 								// console.log("taskList thnigy is", {...taskList, [Object.keys(taskList).length + 1]:{
+// 								// 	taskId: taskList.length + 1,
+// 								// 	title: "",
+// 								// 	fromTime: "",
+// 								// 	toTime: "",
+// 								// 	location: "",
+// 								// 	description: "",
+// 								// 	imgUrl: ""
+// 								// }});
+
+// 								const newTaskList = {
+// 									...taskList,
+// 									[taskId]: {
+// 										taskId: taskId,
+// 										title: '',
+// 										fromTime: '',
+// 										toTime: '',
+// 										location: '',
+// 										description: '',
+// 										imgUrl: '',
+// 									},
+// 								}
+// 								setTaskList(newTaskList)
+// 								// console.log("newTaskList", newTaskList)
+// 								// [...Object.values(taskList),]
+// 								postData({
+// 									username: username,
+// 									date: date,
+// 									data: newTaskList,
+// 								}) // Add a comma after 'date'
+// 								setCurrentTaskId(taskList.length + 1)
+// 							}}
+// 						>
+// 							<AddOutlinedIcon />
+// 							<div>Add task</div>
+// 						</button>
+// 					</div>
+// 				</div>
+
+// 				<div className="body-right">
+// 					<button className="day-navigation">
+// 						<Link to={`/date/${tomorrowString}/${username}`}>
+// 							{tomorrowString + ' >'}
+// 						</Link>
+// 					</button>
+// 				</div>
+// 			</div>
+// 		</div>
+// 	)
+// }
+
 export default function Today() {
-	// Determine the user and the date
-	const location = useLocation()
-	const dateString = location.pathname.split('/')[2].replace(/%20/g, ' ')
-	const username = location.pathname.split('/')[3]
-	const date = new Date(dateString)
+	const [state, setState] = useState(null)
 
-	// Determine previous and next dates
-	const yesterday = new Date(date.valueOf() - 1000 * 60 * 60 * 24 * 1)
-	const yesterdayString = yesterday.toDateString()
-	const tomorrow = new Date(date.valueOf() + 1000 * 60 * 60 * 24 * 1)
-	const tomorrowString = tomorrow.toDateString()
-
-	// Determine real today's date
-	const today = new Date()
-	const todayString = today.toDateString()
-
-	let data = null
-	// getData({username:"username", date:"date"}).then(x =>
-	// 	{data = x.data;
-	// 	console.log(data);}
-	// )
-
-	// TODO: Grab all tasks in this day.
-	const [taskList, setTaskList] = useState(
-		getData({ username: 'username', date: 'date' }).data
-	)
-
-	// console.log("A", getData({username:"username", date:"date"}))
-	// console.log("B", getData({username:"username", date:"date"}).data)
-	// console.log("data", data)
-	// console.log("as list", Object.assign([], {...taskList}))
-
-	function updateTaskList(id, fieldName, value) {
-		// console.log("ID", id)
-		// console.log("fieldName", fieldName)
-		// console.log("value", value)
-		const task = taskList[id]
-		switch (fieldName) {
-			case 'title':
-				task.title = value
-				// console.log("Updated to: ", task.title);
-				break
-			case 'fromTime':
-				task.fromTime = value
-				break
-			case 'toTime':
-				task.toTime = value
-				break
-			case 'location':
-				task.location = value
-				break
-			case 'description':
-				task.description = value
-				break
-			case 'imgUrl':
-				task.imgUrl = value
-				break
-		}
-		setTaskList({ id: task, ...taskList })
-	}
-
-	function deleteTask(id) {
-		const copy = { ...taskList }
-		delete copy[id]
-		setTaskList({ ...copy })
-		postData({ username: 'username', date: 'date', data: copy })
-	}
-
-	// TODO: Initialize to the first ID in the list.
-	const [currentTaskId, setCurrentTaskId] = useState(1)
-
-	function updateCurrentTaskId(id) {
-		setCurrentTaskId(id)
-		// console.log("current task: " + id);
-	}
+	const { getDays } = useData()
 
 	useEffect(() => {
 		async function fetchData() {
-			// const response = await getData({ username, date: dateString });
-			const response = getData({ username, date: dateString })
-
-			setTaskList(response.data)
-
-			// console.log(response.data);
+			const response = await getDays()
+			setState(response)
+			console.log('response', response)
 		}
 		fetchData()
 	}, [])
 
-	return (
-		<div>
-			<div className="row">
-				<div className="body-left">
-					<button className="day-navigation">
-						<Link to={`/date/${yesterdayString}/${username}`}>
-							{'< ' + yesterdayString}{' '}
-						</Link>
-					</button>
-				</div>
-
-				<div className="body-center scroll">
-					{dateString == todayString ? (
-						<h1 className="h1">Today's To-Do List</h1>
-					) : (
-						<h1 className="h1">To-Do List</h1>
-					)}
-					<h2 className="h2">{dateString}</h2>
-					<div className="task-list">
-						{Object.keys(taskList).length ? (
-							Object.assign([], { ...taskList }).map((value) => {
-								// console.log("value", value);
-
-								return (
-									<Task
-										key={value.taskId}
-										id={value.taskId}
-										value={value}
-										showSidebar={
-											currentTaskId == value.taskId
-										}
-										onClick={updateCurrentTaskId}
-										deleteTask={deleteTask}
-										updateTaskList={updateTaskList}
-									/>
-								)
-							})
-						) : (
-							<h2
-								style={{
-									fontStyle: 'italic',
-									opacity: 0.5,
-									textAlign: 'center',
-								}}
-							>
-								Create a task to get started!
-							</h2>
-						)}
-					</div>
-
-					{/* Add a task button */}
-					<div
-						style={{
-							display: 'flex',
-							justifyContent: 'center',
-						}}
-					>
-						<button
-							className="row main-button"
-							style={{
-								width: 'fit-content',
-							}}
-							onClick={() => {
-								let copy = { ...taskList }
-								// console.log("taskList length", );
-								const taskId = Object.keys(taskList).length + 1
-								copy[taskId] = {
-									taskId: taskId,
-									title: '',
-									fromTime: '',
-									toTime: '',
-									location: '',
-									description: '',
-									imgUrl: '',
-								}
-								// const list = Object.assign([], {...taskList})
-								// console.log("taskList AAAAA", copy);
-								// console.log("taskList thnigy is", {...taskList, [Object.keys(taskList).length + 1]:{
-								// 	taskId: taskList.length + 1,
-								// 	title: "",
-								// 	fromTime: "",
-								// 	toTime: "",
-								// 	location: "",
-								// 	description: "",
-								// 	imgUrl: ""
-								// }});
-
-								const newTaskList = {
-									...taskList,
-									[taskId]: {
-										taskId: taskId,
-										title: '',
-										fromTime: '',
-										toTime: '',
-										location: '',
-										description: '',
-										imgUrl: '',
-									},
-								}
-								setTaskList(newTaskList)
-								// console.log("newTaskList", newTaskList)
-								// [...Object.values(taskList),]
-								postData({
-									username: username,
-									date: date,
-									data: newTaskList,
-								}) // Add a comma after 'date'
-								setCurrentTaskId(taskList.length + 1)
-							}}
-						>
-							<AddOutlinedIcon />
-							<div>Add task</div>
-						</button>
-					</div>
-				</div>
-
-				<div className="body-right">
-					<button className="day-navigation">
-						<Link to={`/date/${tomorrowString}/${username}`}>
-							{tomorrowString + ' >'}
-						</Link>
-					</button>
-				</div>
-			</div>
-		</div>
-	)
+	if (!state) {
+		return <pre>Loading...</pre>
+	}
+	return <pre>{state}</pre>
 }
