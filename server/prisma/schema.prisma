@@ -43,5 +43,7 @@ model Task {
     location    String?
     completed   Boolean @default(false)
     photo       String
-    days        Day[]   @relation("DayTasks")
+
+    day   Day @relation("DayTasks", fields: [dayId], references: [id])
+    dayId Int
 }

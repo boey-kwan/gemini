@@ -1,10 +1,9 @@
 import express from 'express'
-import { isAuthenticated } from '../../../middleware/auth.js'
 import { prisma } from '../../../db/prismaClient.js'
 
 const router = express.Router()
 
-router.get('/memories', isAuthenticated, async (req, res) => {
+router.get('/memories', async (req, res) => {
 	// period=day, week, month
 
 	// get Data
