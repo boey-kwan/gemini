@@ -1,5 +1,15 @@
+import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "@google/generative-ai";
+import dotenv from 'dotenv';
+import path from 'path';
+
+// Get the directory path of the current module
+// const __dirname = path.dirname(new URL(import.meta.url).pathname);
+// dotenv.config({ path: path.resolve(__dirname, '../../.env') });
+dotenv.config();
+
 const MODEL_NAME = 'gemini-1.5-pro-latest'
 const API_KEY = process.env.G_KEY
+
 
 function generateLastWeekTimestamp() {
 	const oneWeekMs = 7 * 24 * 60 * 60 * 1000
@@ -248,17 +258,17 @@ async function runChat() {
 	//   },
 	// ];
 
-	const chat = model.startChat({
-		generationConfig,
-		safetySettings,
-		history: [],
-	})
+	// const chat = model.startChat({
+	// 	generationConfig,
+	// 	safetySettings,
+	// 	history: [],
+	// })
 
-	const result = await chat.sendMessage(
-		'Tell me about Pokemon in under 100 words'
-	)
-	const response = result.response
-	console.log(response.text())
+	// const result = await chat.sendMessage(
+	// 	'Tell me about Pokemon in under 100 words'
+	// )
+	// const response = result.response
+	// console.log(response.text())
 	// const chat = model.startChat({
 	//   generationConfig,
 	//   safetySettings,
@@ -287,4 +297,4 @@ async function runChat() {
 	console.log(res.response.text())
 }
 
-// runChat()
+runChat()

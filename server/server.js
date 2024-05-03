@@ -33,11 +33,12 @@ app.options('/*', function (req, res, next) {
 app.use('/auth', authRouter)
 
 // private routes protected by isAuthenticated middleware
+app.use('/memories', memoriesRouter)
 app.use(isAuthenticated)
 app.use('/users', usersRouter)
-app.use('/days', daysRouter)
-app.use('/tasks', tasksRouter)
-app.use('/memories', memoriesRouter)
+app.use('/days', daysRouter) 
+// app.use('/tasks', tasksRouter)
+// app.use('/memories', memoriesRouter)
 app.use('/photos', photosRouter)
 
 // start the Express server
